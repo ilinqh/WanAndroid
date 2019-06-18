@@ -18,48 +18,36 @@ class ScreenUtils {
         /**
          * dp -> px
          */
-        fun dp2px(context: Context, dp: Int): Int {
-            val scale = context.resources.displayMetrics.density
-            return (dp * scale + 0.5f).toInt()
-        }
+        fun dp2px(context: Context, dp: Int) =
+            (dp * context.resources.displayMetrics.density + 0.5f).toInt()
 
         /**
          * px -> dp
          */
-        fun px2dp(context: Context, px: Int): Int {
-            val scale = context.resources.displayMetrics.density
-            return (px / scale + 0.5f).toInt()
-        }
+        fun px2dp(context: Context, px: Int) =
+            (px / context.resources.displayMetrics.density + 0.5f).toInt()
 
         /**
          * sp -> px
          */
-        fun sp2px(context: Context, sp: Int): Int {
-            val scale = context.resources.displayMetrics.scaledDensity
-            return (sp * scale + 0.5f).toInt()
-        }
+        fun sp2px(context: Context, sp: Int) =
+            (sp * context.resources.displayMetrics.scaledDensity + 0.5f).toInt()
 
         /**
          * px -> sp
          */
-        fun px2sp(context: Context, px: Int): Int {
-            val scale = context.resources.displayMetrics.scaledDensity
-            return (px / scale + 0.5f).toInt()
-        }
+        fun px2sp(context: Context, px: Int) =
+            (px / context.resources.displayMetrics.scaledDensity + 0.5f).toInt()
 
         /**
          * 获取屏幕宽度
          */
-        fun getScreenWidth(context: Context): Int {
-            return context.resources.displayMetrics.widthPixels
-        }
+        fun getScreenWidth(context: Context) = context.resources.displayMetrics.widthPixels
 
         /**
          * 获取屏幕高度
          */
-        fun getScreenHeight(context: Context): Int {
-            return context.resources.displayMetrics.heightPixels
-        }
+        fun getScreenHeight(context: Context) = context.resources.displayMetrics.heightPixels
 
         /**
          * 获取 StatusBar 高度

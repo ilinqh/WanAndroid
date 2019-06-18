@@ -29,11 +29,9 @@ class RoundImageView : AppCompatImageView {
     private val rids = FloatArray(8)
     private var paintFlagsDrawFilter: PaintFlagsDrawFilter
 
-    constructor(context: Context) : this(context, null)
-
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    @JvmOverloads
+    constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
+            : super(context, attrs, defStyleAttr) {
         val array = context.obtainStyledAttributes(attrs, R.styleable.RoundImageView)
         val mRadius = array.getDimension(R.styleable.RoundImageView_radius, DEFAULT_RADIUS)
         rids[0] = mRadius
