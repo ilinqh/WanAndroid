@@ -19,6 +19,8 @@ ext {
             "retrofit-converter-gson"   : "com.squareup.retrofit2:converter-gson:2.3.0",
             "retrofit-adapter-rxjava"   : "com.squareup.retrofit2:adapter-rxjava2:2.3.0",
             "okhttp-logging-interceptor": "com.squareup.okhttp3:logging-interceptor:3.9.0",
+            // 出现异常也不会终止订阅关系
+            "rxrelay": "com.jakewharton.rxrelay2:rxrelay:2.0.0",
 
     ]
 }
