@@ -63,11 +63,11 @@ class RxBus private constructor() {
     @JvmOverloads
     fun <T> register(
         eventType: Class<T>,
-        scheduler: Scheduler = AndroidSchedulers.mainThread(),
         onNext: BaseConsumer<T>,
-        onError: Consumer<in Throwable> = Functions.ERROR_CONSUMER,
-        onComplete: Action = Functions.EMPTY_ACTION,
-        onSubscribe: Consumer<in Disposable> = Functions.emptyConsumer()
+        scheduler: Scheduler? = AndroidSchedulers.mainThread(),
+        onError: Consumer<in Throwable>? = Functions.ERROR_CONSUMER,
+        onComplete: Action? = Functions.EMPTY_ACTION,
+        onSubscribe: Consumer<in Disposable>? = Functions.emptyConsumer()
     ): Disposable = toObservable(eventType)
         .observeOn(scheduler)
         .subscribe(onNext, onError, onComplete, onSubscribe)

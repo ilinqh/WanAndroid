@@ -40,5 +40,6 @@ dependencies {
     implementation rootProject.ext.dependencies["okhttp-logging-interceptor"]
     implementation rootProject.ext.dependencies["rxrelay"]
     implementation rootProject.ext.dependencies["rxandroid"]
+    implementation rootProject.ext.dependencies["swipeBackLayout"]
 
 }

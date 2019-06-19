@@ -22,6 +22,8 @@ ext {
             // 出现异常也不会终止订阅关系
             "rxrelay"                   : "com.jakewharton.rxrelay2:rxrelay:2.0.0",
             "rxandroid"                 : "io.reactivex.rxjava2:rxandroid:2.0.1",
+            // 侧滑退出
+            "swipeBackLayout"           : "me.imid.swipebacklayout.lib:library:1.1.0",
 
     ]
 }

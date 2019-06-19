@@ -17,7 +17,8 @@ import lqh.kframe.R
  * 更新历史
  * 编号|更新日期|更新人|更新内容
  */
-class RoundImageView : AppCompatImageView {
+class RoundImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
+    AppCompatImageView(context, attrs, defStyleAttr) {
 
     companion object {
         // 默认圆角角度
@@ -29,9 +30,7 @@ class RoundImageView : AppCompatImageView {
     private val rids = FloatArray(8)
     private var paintFlagsDrawFilter: PaintFlagsDrawFilter
 
-    @JvmOverloads
-    constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
-            : super(context, attrs, defStyleAttr) {
+    init {
         val array = context.obtainStyledAttributes(attrs, R.styleable.RoundImageView)
         val mRadius = array.getDimension(R.styleable.RoundImageView_radius, DEFAULT_RADIUS)
         rids[0] = mRadius
@@ -43,7 +42,6 @@ class RoundImageView : AppCompatImageView {
         rids[6] = mRadius
         rids[7] = mRadius
         array.recycle()
-
         mPath = Path()
         paintFlagsDrawFilter = PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
         setLayerType(View.LAYER_TYPE_HARDWARE, null)
