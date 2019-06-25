@@ -40,6 +40,10 @@ dependencies {
     implementation rootProject.ext.dependencies["okhttp-logging-interceptor"]
     implementation rootProject.ext.dependencies["rxrelay"]
     implementation rootProject.ext.dependencies["rxandroid"]
+    // 侧滑关闭 Activity
     implementation rootProject.ext.dependencies["swipeBackLayout"]
+    // Glide
+    implementation rootProject.ext.dependencies["glide"]
+    annotationProcessor rootProject.ext.dependencies["glideAnnotation"]
 
 }

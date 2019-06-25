@@ -18,25 +18,25 @@ class ScreenUtils {
         /**
          * dp -> px
          */
-        fun Int.dp2px(context: Context) = (this * context.resources.displayMetrics.density + 0.5f).toInt()
+        fun dp2px(context: Context, dp: Int) = (dp * context.resources.displayMetrics.density + 0.5f).toInt()
 
         /**
          * px -> dp
          */
-        fun Int.px2dp(context: Context) =
-            (this / context.resources.displayMetrics.density + 0.5f).toInt()
+        fun px2dp(context: Context, px: Int) =
+            (px / context.resources.displayMetrics.density + 0.5f).toInt()
 
         /**
          * sp -> px
          */
-        fun Int.sp2px(context: Context) =
-            (this * context.resources.displayMetrics.scaledDensity + 0.5f).toInt()
+        fun sp2px(context: Context, sp: Int) =
+            (sp * context.resources.displayMetrics.scaledDensity + 0.5f).toInt()
 
         /**
          * px -> sp
          */
-        fun Int.px2sp(context: Context) =
-            (this / context.resources.displayMetrics.scaledDensity + 0.5f).toInt()
+        fun px2sp(context: Context, px: Int) =
+            (px / context.resources.displayMetrics.scaledDensity + 0.5f).toInt()
 
         /**
          * 获取屏幕宽度

@@ -30,17 +30,26 @@ class RoundImageView @JvmOverloads constructor(context: Context, attrs: Attribut
     private val rids = FloatArray(8)
     private var paintFlagsDrawFilter: PaintFlagsDrawFilter
 
+    /**
+     * 圆角角度
+     */
+    var radius = 0F
+        set(value) {
+            field = value
+            rids[0] = field
+            rids[1] = field
+            rids[2] = field
+            rids[3] = field
+            rids[4] = field
+            rids[5] = field
+            rids[6] = field
+            rids[7] = field
+            invalidate()
+        }
+
     init {
         val array = context.obtainStyledAttributes(attrs, R.styleable.RoundImageView)
-        val mRadius = array.getDimension(R.styleable.RoundImageView_radius, DEFAULT_RADIUS)
-        rids[0] = mRadius
-        rids[1] = mRadius
-        rids[2] = mRadius
-        rids[3] = mRadius
-        rids[4] = mRadius
-        rids[5] = mRadius
-        rids[6] = mRadius
-        rids[7] = mRadius
+        radius = array.getDimension(R.styleable.RoundImageView_radius, DEFAULT_RADIUS)
         array.recycle()
         mPath = Path()
         paintFlagsDrawFilter = PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
@@ -61,4 +70,6 @@ class RoundImageView @JvmOverloads constructor(context: Context, attrs: Attribut
         super.onSizeChanged(w, h, oldw, oldh)
         mRectF = RectF(0f, 0f, w.toFloat(), h.toFloat())
     }
+
+
 }
