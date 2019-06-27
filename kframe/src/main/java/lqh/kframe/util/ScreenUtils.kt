@@ -1,6 +1,8 @@
 package lqh.kframe.util
 
 import android.content.Context
+import android.content.res.Resources
+import android.util.TypedValue
 
 /**
  * 功能：屏幕相关工具类，dp/px，sp/px 转换
@@ -12,31 +14,30 @@ import android.content.Context
  * 更新历史
  * 编号|更新日期|更新人|更新内容
  */
+
+/**
+ * dp -> px
+ */
+fun Int.dp2px() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), Resources.getSystem().displayMetrics).toInt()
+
+/**
+ * px -> dp
+ */
+fun Int.px2dp() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, this.toFloat(), Resources.getSystem().displayMetrics).toInt()
+
+/**
+ * sp -> px
+ */
+fun Int.sp2px() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, this.toFloat(), Resources.getSystem().displayMetrics).toInt()
+
+/**
+ * px -> sp
+ */
+fun Int.px2sp() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, this.toFloat(), Resources.getSystem().displayMetrics).toInt()
+
 class ScreenUtils {
 
     companion object {
-        /**
-         * dp -> px
-         */
-        fun dp2px(context: Context, dp: Int) = (dp * context.resources.displayMetrics.density + 0.5f).toInt()
-
-        /**
-         * px -> dp
-         */
-        fun px2dp(context: Context, px: Int) =
-            (px / context.resources.displayMetrics.density + 0.5f).toInt()
-
-        /**
-         * sp -> px
-         */
-        fun sp2px(context: Context, sp: Int) =
-            (sp * context.resources.displayMetrics.scaledDensity + 0.5f).toInt()
-
-        /**
-         * px -> sp
-         */
-        fun px2sp(context: Context, px: Int) =
-            (px / context.resources.displayMetrics.scaledDensity + 0.5f).toInt()
 
         /**
          * 获取屏幕宽度

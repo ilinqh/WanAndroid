@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.layout_banner_view.view.*
 import kotlinx.android.synthetic.main.layout_banner_view_item.view.*
 import lqh.kframe.R
-import lqh.kframe.util.ScreenUtils
+import lqh.kframe.util.dp2px
 
 /**
  * 功能：
@@ -82,17 +82,26 @@ class BannerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     /**
      * 指示器宽度
      */
-    var dotWith = ScreenUtils.dp2px(context, 5)
+    var dotWith = 5.dp2px()
+        set(value) {
+            field = value.dp2px()
+        }
 
     /**
      * 指示器高度
      */
-    var dotHeight = ScreenUtils.dp2px(context, 5)
+    var dotHeight = 5.dp2px()
+        set(value) {
+            field = value.dp2px()
+        }
 
     /**
      * 指示器间距
      */
-    var dotSpace = ScreenUtils.dp2px(context, 10)
+    var dotSpace = 10.dp2px()
+        set(value) {
+            field = value.dp2px()
+        }
 
     /**
      * banner 展示时间
@@ -178,7 +187,7 @@ class BannerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
             override fun onPageSelected(position: Int) {
                 for (i in 0..llDot.childCount) {
-                    var child = llDot.getChildAt(i)
+                    val child = llDot.getChildAt(i)
                     child.setBackgroundResource(dotImage)
                     if (i == position - 1) {
                         // 被选中
@@ -197,7 +206,7 @@ class BannerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
             }
 
             override fun onPageScrollStateChanged(state: Int) {
-                when(state) {
+                when (state) {
                     ViewPager.SCROLL_STATE_IDLE -> {
                         // 闲置状态
                         if (viewPager.currentItem == 0) {
@@ -227,18 +236,16 @@ class BannerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     private fun setViewList(list: ArrayList<String>) {
         viewList = ArrayList()
         for (i in 0..count + LEAST_ITEM) {
-            var view = LayoutInflater.from(context).inflate(R.layout.layout_banner_view_item, viewPager, false)
+            val view = LayoutInflater.from(context).inflate(R.layout.layout_banner_view_item, viewPager, false)
             if (imageLp != null) {
                 imageView.layoutParams = imageLp
             }
-            var url: String = if (i == 0) {
-                // 将 viewPager 的初始页设置为数据列表的最后一项
-                list[count - 1]
-            } else if (i == count + 1) {
-                // viewpager 最后一页设置为数据列表的第一项
-                list[0]
-            } else {
-                list[i - 1]
+            val url: String = when (i) {
+                0 -> // 将 viewPager 的初始页设置为数据列表的最后一项
+                    list[count - 1]
+                count + 1 -> // viewpager 最后一页设置为数据列表的第一项
+                    list[0]
+                else -> list[i - 1]
             }
             Glide.with(context)
                 .load(url)
@@ -258,10 +265,10 @@ class BannerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         isChecked.clear()
         llDot.removeAllViews()
         for (i in 0..count) {
-            var view = View(context)
+            val view = View(context)
             view.setBackgroundResource(dotImage)
             view.background.alpha = alpha
-            var params = LinearLayout.LayoutParams(dotWith, dotHeight)
+            val params = LinearLayout.LayoutParams(dotWith, dotHeight)
             params.leftMargin = dotSpace / 2
             params.topMargin = dotSpace / 2
             params.rightMargin = dotSpace / 2
@@ -321,7 +328,7 @@ class BannerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         override fun getCount(): Int = viewList.size
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            var view = viewList[position]
+            val view = viewList[position]
             view.setOnClickListener {
                 listener?.onBannerItemClickListener(position - 1)
             }
