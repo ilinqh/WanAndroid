@@ -45,16 +45,19 @@ class ScreenUtils {
         /**
          * 获取屏幕宽度
          */
+        @JvmStatic
         fun getScreenWidth() = Resources.getSystem().displayMetrics.widthPixels
 
         /**
          * 获取屏幕高度
          */
+        @JvmStatic
         fun getScreenHeight() = Resources.getSystem().displayMetrics.heightPixels
 
         /**
          * 获取 StatusBar 高度
          */
+        @JvmStatic
         fun getStatusBarHeight(): Int {
             var result = 0
             val resourceId = Resources.getSystem().getIdentifier("status_bar_height", "dimen", "android")
