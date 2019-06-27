@@ -15,7 +15,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:radius="16dp" />
+        app:radius="0dp" />
 
     <Button
         android:id="@+id/button"

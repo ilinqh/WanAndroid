@@ -119,5 +119,42 @@ class SPUtils {
                 editor.apply()
             }
         }
+
+        fun getString(context: Context, key: String): String? {
+            val sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
+            return sp.getString(key, defaultString)
+        }
+
+        fun getInt(context: Context, key: String): Int {
+            val sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
+            return sp.getInt(key, defaultInt)
+        }
+
+        fun getFloat(context: Context, key: String): Float {
+            val sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
+            return sp.getFloat(key, defaultFloat)
+        }
+
+        fun getLong(context: Context, key: String): Long {
+            val sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
+            return sp.getLong(key, defaultLong)
+        }
+
+        fun getBoolean(context: Context, key: String): Boolean {
+            val sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
+            return sp.getBoolean(key, defaultBoolean)
+        }
+
+        fun hasKey(context: Context, key: String): Boolean {
+            val sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
+            return sp.contains(key)
+        }
+
+        fun clear(context: Context) {
+            val sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
+            val editor = sp.edit()
+            editor.clear()
+            editor.apply()
+        }
     }
 }
