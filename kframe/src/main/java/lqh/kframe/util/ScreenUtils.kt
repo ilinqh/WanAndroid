@@ -1,6 +1,5 @@
 package lqh.kframe.util
 
-import android.content.Context
 import android.content.res.Resources
 import android.util.TypedValue
 
@@ -18,22 +17,26 @@ import android.util.TypedValue
 /**
  * dp -> px
  */
-fun Int.dp2px() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), Resources.getSystem().displayMetrics).toInt()
+fun Int.dp2px() =
+    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), Resources.getSystem().displayMetrics).toInt()
 
 /**
  * px -> dp
  */
-fun Int.px2dp() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, this.toFloat(), Resources.getSystem().displayMetrics).toInt()
+fun Int.px2dp() =
+    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, this.toFloat(), Resources.getSystem().displayMetrics).toInt()
 
 /**
  * sp -> px
  */
-fun Int.sp2px() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, this.toFloat(), Resources.getSystem().displayMetrics).toInt()
+fun Int.sp2px() =
+    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, this.toFloat(), Resources.getSystem().displayMetrics).toInt()
 
 /**
  * px -> sp
  */
-fun Int.px2sp() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, this.toFloat(), Resources.getSystem().displayMetrics).toInt()
+fun Int.px2sp() =
+    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, this.toFloat(), Resources.getSystem().displayMetrics).toInt()
 
 class ScreenUtils {
 
@@ -42,21 +45,21 @@ class ScreenUtils {
         /**
          * 获取屏幕宽度
          */
-        fun getScreenWidth(context: Context) = context.resources.displayMetrics.widthPixels
+        fun getScreenWidth() = Resources.getSystem().displayMetrics.widthPixels
 
         /**
          * 获取屏幕高度
          */
-        fun getScreenHeight(context: Context) = context.resources.displayMetrics.heightPixels
+        fun getScreenHeight() = Resources.getSystem().displayMetrics.heightPixels
 
         /**
          * 获取 StatusBar 高度
          */
-        fun getStatusBarHeight(context: Context): Int {
+        fun getStatusBarHeight(): Int {
             var result = 0
-            val resourceId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
+            val resourceId = Resources.getSystem().getIdentifier("status_bar_height", "dimen", "android")
             if (resourceId > 0) {
-                result = context.resources.getDimensionPixelSize(resourceId)
+                result = Resources.getSystem().getDimensionPixelSize(resourceId)
             }
             return result
         }
