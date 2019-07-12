@@ -45,5 +45,6 @@ dependencies {
     // Glide
     implementation rootProject.ext.dependencies["glide"]
     annotationProcessor rootProject.ext.dependencies["glideAnnotation"]
+    annotationProcessor rootProject.ext.dependencies["BRVAH"]
 
 }

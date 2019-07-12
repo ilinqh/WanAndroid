@@ -45,7 +45,7 @@ class BannerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         const val CHECK_TIME: Long = 5000
     }
 
-    private var contentView: View
+    private var contentView = LayoutInflater.from(context).inflate(R.layout.layout_banner_view, this, true)
 
     /**
      * banner 数量
@@ -77,7 +77,7 @@ class BannerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     /**
      * banner 展示图片的 URL
      */
-    private var bannerUrlList: ArrayList<String>
+    private var bannerUrlList: ArrayList<String> = ArrayList()
 
     /**
      * 指示器宽度
@@ -158,11 +158,6 @@ class BannerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     }
 
     init {
-        // 初始化 View
-        contentView = LayoutInflater.from(context).inflate(R.layout.layout_banner_view, this, true)
-        // 初始化数据
-        bannerUrlList = ArrayList()
-
         adapter = BannerAdapter()
         viewPager.adapter = adapter
     }
