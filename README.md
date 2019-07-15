@@ -5,6 +5,7 @@
 1. 一个 Activity + 多个 Fragment 实现整个 APP 功能
 2. JetPack 中的组件（LiveData + ViewModel + Lifecycles）
 3. 继续使用 DataBinding
+4. 协程
 
 
 待解决技术点：
