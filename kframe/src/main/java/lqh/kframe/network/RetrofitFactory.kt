@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
 /**
  * 功能：网络请求 Retrofit 基本配置
  * -------------------------------------------------------------------------------------------------
- * 创建者：@author 林钦宏
+ * 创建者：@author lqh
  * -------------------------------------------------------------------------------------------------
  * 创建日期：2019/6/16
  * -------------------------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ class RetrofitFactory private constructor() {
          * 构建打印日志拦截器
          */
         private fun getHttpLoggingInterceptor(): HttpLoggingInterceptor {
-            var interceptor = HttpLoggingInterceptor(
+            val interceptor = HttpLoggingInterceptor(
                 HttpLoggingInterceptor.Logger {
                     // TODO 编写工具类
                     Log.e("abc", it)
@@ -70,7 +70,7 @@ class RetrofitFactory private constructor() {
             if (null == client) {
                 @Synchronized
                 if (null === client) {
-                    var builder = OkHttpClient.Builder()
+                    val builder = OkHttpClient.Builder()
                     client = builder.addNetworkInterceptor(getHttpLoggingInterceptor())
                         .addInterceptor { chain ->
                             // 添加公共的头部

@@ -1,5 +1,6 @@
 package lqh.kframe.controller
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +12,7 @@ import me.imid.swipebacklayout.lib.app.SwipeBackActivityHelper
 /**
  * 功能：Activity 基类
  * -------------------------------------------------------------------------------------------------
- * 创建者：@author 林钦宏
+ * 创建者：@author lqh
  * -------------------------------------------------------------------------------------------------
  * 创建日期：2019/6/19
  * -------------------------------------------------------------------------------------------------
@@ -20,7 +21,24 @@ import me.imid.swipebacklayout.lib.app.SwipeBackActivityHelper
  */
 abstract class BaseAct : AppCompatActivity(), SwipeBackActivityBase, View.OnClickListener {
 
-    lateinit var mHelper: SwipeBackActivityHelper
+    private lateinit var mHelper: SwipeBackActivityHelper
+
+    /**
+     * 强制限制字体大小，避免字体大小随系统改变
+     */
+    override fun getResources(): Resources {
+        var resources = super.getResources()
+        val newConfig = resources.configuration
+        val displayMetrics = resources.displayMetrics
+
+        if (newConfig.fontScale != 1f) {
+            newConfig.fontScale = 1f
+            val configurationContext = createConfigurationContext(newConfig)
+            resources = configurationContext.resources
+            displayMetrics.scaledDensity = displayMetrics.density * newConfig.fontScale
+        }
+        return resources
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         mHelper = SwipeBackActivityHelper(this)
