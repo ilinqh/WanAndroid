@@ -4,6 +4,7 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import lqh.kframe.weight.statuslayout.StatusLayout
 import me.imid.swipebacklayout.lib.SwipeBackLayout
 import me.imid.swipebacklayout.lib.Utils
 import me.imid.swipebacklayout.lib.app.SwipeBackActivityBase
@@ -22,6 +23,8 @@ import me.imid.swipebacklayout.lib.app.SwipeBackActivityHelper
 abstract class BaseAct : AppCompatActivity(), SwipeBackActivityBase, View.OnClickListener {
 
     private lateinit var mHelper: SwipeBackActivityHelper
+
+    private lateinit var statusLayout: StatusLayout
 
     /**
      * 强制限制字体大小，避免字体大小随系统改变
@@ -44,6 +47,8 @@ abstract class BaseAct : AppCompatActivity(), SwipeBackActivityBase, View.OnClic
         mHelper = SwipeBackActivityHelper(this)
         mHelper.onActivityCreate()
         super.onCreate(savedInstanceState)
+        statusLayout = StatusLayout.init(this, getLayoutId())
+        setContentView(statusLayout)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -57,6 +62,11 @@ abstract class BaseAct : AppCompatActivity(), SwipeBackActivityBase, View.OnClic
      * 设置是否可滑动退出
      */
     override fun setSwipeBackEnable(enable: Boolean) = swipeBackLayout.setEnableGesture(enable)
+
+    /**
+     * 获取资源文件 ID
+     */
+    protected abstract fun getLayoutId(): Int
 
     /**
      * 设置滑动退出的边缘起始位置
