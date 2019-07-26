@@ -32,6 +32,5 @@ data class StatusConfig(
      * 布局文件中需要点击的 资源ID
      */
     @IdRes
-    var clickRes: Int = 0,
-    var autoClick: Boolean = true
+    var clickRes: Int = 0
 )

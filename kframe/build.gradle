@@ -43,8 +43,9 @@ dependencies {
     // 侧滑关闭 Activity
     implementation rootProject.ext.dependencies["swipeBackLayout"]
     // Glide
-    implementation rootProject.ext.dependencies["glide"]
+    api rootProject.ext.dependencies["glide"]
     annotationProcessor rootProject.ext.dependencies["glideAnnotation"]
     annotationProcessor rootProject.ext.dependencies["BRVAH"]
+    api 'androidx.constraintlayout:constraintlayout:1.1.3'
 
 }
