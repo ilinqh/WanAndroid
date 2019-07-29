@@ -6,6 +6,8 @@
 2. JetPack 中的组件（LiveData + ViewModel + Lifecycles）
 3. 继续使用 DataBinding
 4. 协程
+5. MotionLayout
+6. TransitionManager 过渡动画
 
 ----
 
