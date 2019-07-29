@@ -11,4 +11,7 @@ package lqh.kframe.controller
  * 编号|更新日期|更新人|更新内容
  */
 class BaseFragment {
+
+
+
 }

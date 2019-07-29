@@ -41,7 +41,7 @@ dependencies {
     implementation rootProject.ext.dependencies["rxrelay"]
     implementation rootProject.ext.dependencies["rxandroid"]
     // 侧滑关闭 Activity
-    implementation rootProject.ext.dependencies["swipeBackLayout"]
+    api rootProject.ext.dependencies["swipeBackLayout"]
     // Glide
     api rootProject.ext.dependencies["glide"]
     annotationProcessor rootProject.ext.dependencies["glideAnnotation"]

@@ -56,7 +56,7 @@ class StatusLayout(context: Context, attrs: AttributeSet? = null) : ViewAnimator
             val rootView = LayoutInflater.from(context).inflate(layoutId, null)
                 ?: throw NullPointerException("View can not be null.")
             val statusLayout = StatusLayout(context)
-            statusLayout.addView(rootView)
+            statusLayout.addStatus(StatusConfig(NORMAL_STATUS, view = rootView))
             return statusLayout
         }
     }
@@ -129,7 +129,7 @@ class StatusLayout(context: Context, attrs: AttributeSet? = null) : ViewAnimator
      */
     private fun getViewIndexByStatus(status: String): Int {
         for (position in 0 until childCount) {
-            if (TextUtils.equals(getChildAt(position).tag as String, status)) {
+            if (getChildAt(position).tag != null && TextUtils.equals(getChildAt(position).tag as String, status)) {
                 return position
             }
         }

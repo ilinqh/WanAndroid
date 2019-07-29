@@ -2,10 +2,11 @@ package lqh.kframe.controller
 
 import android.content.res.Resources
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import lqh.kframe.R
+import lqh.kframe.util.KeyBoardUtils
+import lqh.kframe.util.SystemUtils
 import lqh.kframe.weight.statuslayout.StatusConfig
 import lqh.kframe.weight.statuslayout.StatusLayout
 import me.imid.swipebacklayout.lib.SwipeBackLayout
@@ -28,7 +29,7 @@ abstract class BaseAct : AppCompatActivity(), SwipeBackActivityBase, View.OnClic
 
     private lateinit var mHelper: SwipeBackActivityHelper
 
-    private lateinit var statusLayout: StatusLayout
+    protected lateinit var statusLayout: StatusLayout
 
     /**
      * 强制限制字体大小，避免字体大小随系统改变
@@ -59,6 +60,7 @@ abstract class BaseAct : AppCompatActivity(), SwipeBackActivityBase, View.OnClic
         statusLayout.onLayoutClickListener = this
 
         initData()
+        statusLayout.switchStatusLayout(StatusLayout.LOADING_STATUS)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -74,23 +76,29 @@ abstract class BaseAct : AppCompatActivity(), SwipeBackActivityBase, View.OnClic
     override fun setSwipeBackEnable(enable: Boolean) = swipeBackLayout.setEnableGesture(enable)
 
     /**
-     * 初始化页面数据
-     */
-    protected abstract fun initData()
-
-    /**
      * 获取资源文件 ID
      */
     protected abstract fun getLayoutId(): Int
 
     /**
+     * 初始化页面数据
+     */
+    protected abstract fun initData()
+
+    /**
      * 添加不同状态
      */
-    fun addStatus() {
+    protected open fun addStatus() {
         // 加载中...
         statusLayout.addStatus(StatusConfig(StatusLayout.LOADING_STATUS, layoutRes = R.layout.status_layout_loading))
         // 出错
-        statusLayout.addStatus(StatusConfig(StatusLayout.ERROR_STATUS, layoutRes = R.layout.status_layout_error, clickRes = R.id.layoutError))
+        statusLayout.addStatus(
+            StatusConfig(
+                StatusLayout.ERROR_STATUS,
+                layoutRes = R.layout.status_layout_error,
+                clickRes = R.id.layoutError
+            )
+        )
         // 无数据
         statusLayout.addStatus(StatusConfig(StatusLayout.EMPTY_STATUS, layoutRes = R.layout.status_layout_empty))
     }
@@ -108,14 +116,39 @@ abstract class BaseAct : AppCompatActivity(), SwipeBackActivityBase, View.OnClic
         swipeBackLayout.scrollToFinishActivity()
     }
 
-    fun addSwipeListener(listener: SwipeBackLayout.SwipeListener) = swipeBackLayout.addSwipeListener(listener)
+    protected open fun addSwipeListener(listener: SwipeBackLayout.SwipeListener) =
+        swipeBackLayout.addSwipeListener(listener)
+
+    /**
+     * 防止快速点击，在子 Activity 中处理点击事件时，不要重写这个方法，而应该重写
+     * @see clickView(android.view.View) 方法
+     */
+    override fun onClick(v: View) {
+        if (SystemUtils.isFastClick()) {
+            return
+        } else {
+            clickView(v)
+        }
+    }
 
     override fun onLayoutClick(view: View, status: String) {
-        when(view.id) {
+        when (view.id) {
             R.id.layoutError -> {
                 // 出错
-
+                statusLayout.switchStatusLayout(StatusLayout.NORMAL_STATUS)
             }
         }
+    }
+
+    /**
+     * 在这个方法中做点击事件的处理
+     */
+    open fun clickView(v: View) {
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        KeyBoardUtils.hideKeyboard(this, statusLayout)
     }
 }
