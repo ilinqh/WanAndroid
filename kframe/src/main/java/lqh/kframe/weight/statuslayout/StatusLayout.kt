@@ -55,8 +55,12 @@ class StatusLayout(context: Context, attrs: AttributeSet? = null) : ViewAnimator
         fun init(context: Context, @LayoutRes layoutId: Int): StatusLayout {
             val rootView = LayoutInflater.from(context).inflate(layoutId, null)
                 ?: throw NullPointerException("View can not be null.")
+            return init(context, rootView)
+        }
+
+        fun init(context: Context, view: View): StatusLayout {
             val statusLayout = StatusLayout(context)
-            statusLayout.addStatus(StatusConfig(NORMAL_STATUS, view = rootView))
+            statusLayout.addStatus(StatusConfig(NORMAL_STATUS, view = view))
             return statusLayout
         }
     }

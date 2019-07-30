@@ -4,5 +4,5 @@
 
     <string name="str_loading">loading…</string>
     <string name="str_error_tip">load error. click empty to refresh.</string>
-    <string name="str_empty_data">暂无数据</string>
+    <string name="str_empty_data">no data…</string>
 </resources>

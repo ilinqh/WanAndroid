@@ -13,7 +13,7 @@ package lqh.kframe.util
 class SystemUtils {
     companion object {
 
-        private const val FAST_CLICK_DELAY_TIME = 1000
+        private const val FAST_CLICK_DELAY_TIME = 500
 
         private var lastClickTime = 0L
 

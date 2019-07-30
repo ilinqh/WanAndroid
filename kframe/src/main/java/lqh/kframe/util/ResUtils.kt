@@ -2,11 +2,13 @@ package lqh.kframe.util
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.StateListDrawable
-import androidx.annotation.*
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 
 /**
@@ -22,18 +24,12 @@ import androidx.core.content.ContextCompat
 class ResUtils {
 
     companion object {
-        /**
-         * 获取文字
-         */
-        @JvmOverloads
-        @JvmStatic
-        fun getString(@StringRes resId: Int, args: Any? = null) = Resources.getSystem().getString(resId, args)
 
         /**
          * 获取颜色
          */
         @JvmStatic
-        fun getColor(context: Context, @ColorRes resId: Int) = ContextCompat.getColor(context, resId)
+        fun getColor(context: Context, @ColorRes resId: Int): Int = ContextCompat.getColor(context, resId)
 
         /**
          * 获取 Drawable

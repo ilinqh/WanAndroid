@@ -4,6 +4,8 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import lqh.kframe.R
 import lqh.kframe.util.KeyBoardUtils
 import lqh.kframe.util.SystemUtils
@@ -24,12 +26,32 @@ import me.imid.swipebacklayout.lib.app.SwipeBackActivityHelper
  * 更新历史
  * 编号|更新日期|更新人|更新内容
  */
-abstract class BaseAct : AppCompatActivity(), SwipeBackActivityBase, View.OnClickListener,
+abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActivityBase, View.OnClickListener,
     StatusLayout.OnLayoutClickListener {
 
     private lateinit var mHelper: SwipeBackActivityHelper
 
     protected lateinit var statusLayout: StatusLayout
+
+    protected lateinit var binding: T
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        mHelper = SwipeBackActivityHelper(this)
+        mHelper.onActivityCreate()
+        super.onCreate(savedInstanceState)
+
+        binding = DataBindingUtil.inflate(layoutInflater, getLayoutId(), null, false)
+
+        statusLayout = StatusLayout.init(this, binding.root)
+        // 添加不同状态
+        addStatus()
+
+        setContentView(statusLayout)
+        statusLayout.onLayoutClickListener = this
+
+        statusLayout.switchStatusLayout(StatusLayout.LOADING_STATUS)
+        initData()
+    }
 
     /**
      * 强制限制字体大小，避免字体大小随系统改变
@@ -46,21 +68,6 @@ abstract class BaseAct : AppCompatActivity(), SwipeBackActivityBase, View.OnClic
             displayMetrics.scaledDensity = displayMetrics.density * newConfig.fontScale
         }
         return resources
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        mHelper = SwipeBackActivityHelper(this)
-        mHelper.onActivityCreate()
-        super.onCreate(savedInstanceState)
-        statusLayout = StatusLayout.init(this, getLayoutId())
-        // 添加不同状态
-        addStatus()
-
-        setContentView(statusLayout)
-        statusLayout.onLayoutClickListener = this
-
-        initData()
-        statusLayout.switchStatusLayout(StatusLayout.LOADING_STATUS)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
