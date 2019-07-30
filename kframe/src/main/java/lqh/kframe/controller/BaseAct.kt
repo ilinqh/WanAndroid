@@ -1,13 +1,20 @@
 package lqh.kframe.controller
 
 import android.content.res.Resources
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.AppBarLayout
 import lqh.kframe.R
 import lqh.kframe.util.KeyBoardUtils
+import lqh.kframe.util.ScreenUtils
 import lqh.kframe.util.SystemUtils
 import lqh.kframe.weight.statuslayout.StatusConfig
 import lqh.kframe.weight.statuslayout.StatusLayout
@@ -15,6 +22,7 @@ import me.imid.swipebacklayout.lib.SwipeBackLayout
 import me.imid.swipebacklayout.lib.Utils
 import me.imid.swipebacklayout.lib.app.SwipeBackActivityBase
 import me.imid.swipebacklayout.lib.app.SwipeBackActivityHelper
+
 
 /**
  * 功能：Activity 基类
@@ -35,6 +43,21 @@ abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActi
 
     protected lateinit var binding: T
 
+    /**
+     * RecyclerView 数据加载 View
+     */
+    protected lateinit var loadingView: View
+
+    /**
+     * RecyclerView 没有数据显示 View
+     */
+    protected lateinit var emptyView: View
+
+    /**
+     * RecyclerView 加载出错显示 View
+     */
+    protected lateinit var errorView: View
+
     override fun onCreate(savedInstanceState: Bundle?) {
         mHelper = SwipeBackActivityHelper(this)
         mHelper.onActivityCreate()
@@ -50,6 +73,9 @@ abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActi
         statusLayout.onLayoutClickListener = this
 
         statusLayout.switchStatusLayout(StatusLayout.LOADING_STATUS)
+
+        initToolbar()
+
         initData()
     }
 
@@ -93,21 +119,65 @@ abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActi
     protected abstract fun initData()
 
     /**
+     * 初始化状态栏
+     */
+    private fun initToolbar() {
+        val appBarLayout: AppBarLayout? = binding.root.findViewById(R.id.layout_app_bar)
+        val toolbar: Toolbar? = binding.root.findViewById(R.id.toolbar)
+
+        // 标题栏适配
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (appBarLayout != null && toolbar != null) {
+                if (!ScreenUtils.isFullScreen(this)) {
+                    val toolbarParams = toolbar.layoutParams
+                    toolbarParams.height = ScreenUtils.getStatusBarHeight() + toolbarParams.height
+                    toolbar.layoutParams = toolbarParams
+                    toolbar.setPadding(0, ScreenUtils.getStatusBarHeight(), 0, 0)
+                }
+            }
+        }
+    }
+
+    /**
+     * 刷新数据
+     */
+    protected open fun onRefreshData() {}
+
+    /**
      * 添加不同状态
      */
     protected open fun addStatus() {
         // 加载中...
-        statusLayout.addStatus(StatusConfig(StatusLayout.LOADING_STATUS, layoutRes = R.layout.status_layout_loading))
+        statusLayout.addStatus(StatusConfig(StatusLayout.LOADING_STATUS, layoutRes = R.layout.layout_loading_status))
         // 出错
         statusLayout.addStatus(
             StatusConfig(
                 StatusLayout.ERROR_STATUS,
-                layoutRes = R.layout.status_layout_error,
+                layoutRes = R.layout.layout_error_status,
                 clickRes = R.id.layoutError
             )
         )
         // 无数据
-        statusLayout.addStatus(StatusConfig(StatusLayout.EMPTY_STATUS, layoutRes = R.layout.status_layout_empty))
+        statusLayout.addStatus(StatusConfig(StatusLayout.EMPTY_STATUS, layoutRes = R.layout.layout_empty_status))
+    }
+
+    /**
+     * 若 Activity 中有 RecyclerView 同时需要切换不同状态，一定要先调用此方法初始化各个视图
+     */
+    protected fun initBaseRecyclerView(recyclerView: RecyclerView) {
+        val parent = recyclerView.parent as ViewGroup
+        // 加载中
+        loadingView = layoutInflater.inflate(R.layout.layout_loading_status, parent, false)
+        // 出错了
+        errorView = layoutInflater.inflate(R.layout.layout_error_status, parent, false)
+        errorView.setOnClickListener {
+            onRefreshData()
+        }
+        // 空数据
+        emptyView = layoutInflater.inflate(R.layout.layout_empty_status, parent, false)
+        emptyView.setOnClickListener {
+            onRefreshData()
+        }
     }
 
     /**
@@ -142,9 +212,14 @@ abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActi
         when (view.id) {
             R.id.layoutError -> {
                 // 出错
-                statusLayout.switchStatusLayout(StatusLayout.NORMAL_STATUS)
+                statusLayout.switchStatusLayout(StatusLayout.LOADING_STATUS)
+                onRefreshData()
             }
         }
+    }
+
+    fun back(view: View) {
+        finish()
     }
 
     /**

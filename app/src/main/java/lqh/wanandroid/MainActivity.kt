@@ -17,16 +17,13 @@ class MainActivity : BaseAct<ActivityMainBinding>() {
 
         setSwipeBackEnable(false)
 
-        root.postDelayed({
-            statusLayout.switchStatusLayout(StatusLayout.ERROR_STATUS)
-        }, 3000)
-
         binding.click = this
 
         binding.name = getString(R.string.app_name)
 
         button.setBackgroundColor(Color.RED)
         button.setBackgroundResource(R.color.colorAccent)
+        statusLayout.switchStatusLayout(StatusLayout.NORMAL_STATUS)
     }
 
     override fun clickView(v: View) {

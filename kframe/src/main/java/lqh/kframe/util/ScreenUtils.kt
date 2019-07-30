@@ -1,7 +1,10 @@
 package lqh.kframe.util
 
+import android.app.Activity
 import android.content.res.Resources
 import android.util.TypedValue
+import android.view.WindowManager
+
 
 /**
  * 功能：屏幕相关工具类，dp/px，sp/px 转换
@@ -65,6 +68,14 @@ class ScreenUtils {
                 result = Resources.getSystem().getDimensionPixelSize(resourceId)
             }
             return result
+        }
+
+        /**
+         * 判断 Activity 是否全屏
+         */
+        fun isFullScreen(activity: Activity): Boolean {
+            val flag = activity.window.attributes.flags
+            return (flag and WindowManager.LayoutParams.FLAG_FULLSCREEN) == WindowManager.LayoutParams.FLAG_FULLSCREEN
         }
     }
 

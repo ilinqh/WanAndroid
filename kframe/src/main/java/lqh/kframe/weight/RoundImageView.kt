@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import lqh.kframe.R
+import lqh.kframe.util.dp2px
 
 /**
  * 功能：圆角 ImageView
@@ -22,7 +23,7 @@ class RoundImageView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     companion object {
         // 默认圆角角度
-        private const val DEFAULT_RADIUS = 8f
+        private val DEFAULT_RADIUS = 4.dp2px().toFloat()
     }
 
     private var mPath: Path
