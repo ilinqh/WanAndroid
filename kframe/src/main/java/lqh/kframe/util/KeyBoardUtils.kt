@@ -27,17 +27,21 @@ object KeyBoardUtils {
     /**
      * view 为接受软键盘输入的视图，SHOW_FORCED 表示强制显示
      */
-    fun showKeyBoard(context: Context, view: View) {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(view, InputMethodManager.SHOW_FORCED)
+    fun showKeyBoard(context: Context, view: View?) {
+        view?.let {
+            val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(it, InputMethodManager.SHOW_FORCED)
+        }
     }
 
     /**
      * 隐藏 KeyBoard
      */
-    fun hideKeyboard(context: Context, view: View) {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+    fun hideKeyboard(context: Context, view: View?) {
+        view?.let {
+            val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(it.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+        }
     }
 
     /**

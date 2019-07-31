@@ -15,7 +15,7 @@ import android.util.Log
 class LogUtils {
 
     companion object {
-        var debug = false
+        var debug = true
 
         var TAG = "KFrame"
 

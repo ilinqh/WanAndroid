@@ -1,9 +1,9 @@
 package lqh.kframe.controller
 
 import android.content.res.Resources
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +13,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import lqh.kframe.R
+import lqh.kframe.jetpack.lifecycle.BaseActivityLifecycle
 import lqh.kframe.util.KeyBoardUtils
 import lqh.kframe.util.ScreenUtils
 import lqh.kframe.util.SystemUtils
@@ -73,6 +74,8 @@ abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActi
         statusLayout.onLayoutClickListener = this
 
         statusLayout.switchStatusLayout(StatusLayout.LOADING_STATUS)
+
+        BaseActivityLifecycle(this, this, statusLayout)
 
         initToolbar()
 
@@ -180,6 +183,14 @@ abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActi
         }
     }
 
+    // 点击空白区域隐藏软键盘
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        if (null != currentFocus) {
+            KeyBoardUtils.hideKeyboard(this, currentFocus)
+        }
+        return super.onTouchEvent(event)
+    }
+
     /**
      * 设置滑动退出的边缘起始位置
      *
@@ -225,12 +236,5 @@ abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActi
     /**
      * 在这个方法中做点击事件的处理
      */
-    open fun clickView(v: View) {
-
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        KeyBoardUtils.hideKeyboard(this, statusLayout)
-    }
+    open fun clickView(v: View) {}
 }
