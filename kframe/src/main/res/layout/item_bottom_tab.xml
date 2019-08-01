@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="49dp"
+    android:layout_weight="1"
+    tools:layout_width="100dp">
+
+    <ImageView
+        android:id="@+id/tabImage"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerInParent="true"
+        android:background="@color/colorPrimary"
+        android:scaleType="center"
+        app:layout_constraintBottom_toTopOf="@+id/tabText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <View
+        android:layout_width="8dp"
+        android:id="@+id/tipPoint"
+        android:layout_height="8dp"
+        android:background="@drawable/shape_tip_point"
+        app:layout_constraintBottom_toTopOf="@+id/tabImage"
+        app:layout_constraintEnd_toEndOf="@+id/tabImage"
+        app:layout_constraintStart_toEndOf="@+id/tabImage"
+        app:layout_constraintTop_toTopOf="@+id/tabImage" />
+
+    <TextView
+        android:id="@+id/tabText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textColor="@color/color_tab_name_normal"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabImage"
+        tools:text="@string/app_name" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

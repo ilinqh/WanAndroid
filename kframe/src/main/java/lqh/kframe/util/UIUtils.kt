@@ -5,7 +5,6 @@ import android.content.res.Resources
 import android.util.TypedValue
 import android.view.WindowManager
 
-
 /**
  * 功能：屏幕相关工具类，dp/px，sp/px 转换
  * -------------------------------------------------------------------------------------------------
@@ -41,7 +40,7 @@ fun Int.sp2px() =
 fun Int.px2sp() =
     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, this.toFloat(), Resources.getSystem().displayMetrics).toInt()
 
-class ScreenUtils {
+class UIUtils {
 
     companion object {
 
@@ -76,6 +75,23 @@ class ScreenUtils {
         fun isFullScreen(activity: Activity): Boolean {
             val flag = activity.window.attributes.flags
             return (flag and WindowManager.LayoutParams.FLAG_FULLSCREEN) == WindowManager.LayoutParams.FLAG_FULLSCREEN
+        }
+
+        private const val FAST_CLICK_DELAY_TIME = 500
+
+        private var lastClickTime = 0L
+
+        /**
+         * 判断是否快速点击
+         */
+        fun isFastClick(): Boolean {
+            var flag = false
+            val currentClickTime = System.currentTimeMillis()
+            if (currentClickTime - lastClickTime < FAST_CLICK_DELAY_TIME) {
+                flag = true
+            }
+            lastClickTime = currentClickTime
+            return flag
         }
     }
 

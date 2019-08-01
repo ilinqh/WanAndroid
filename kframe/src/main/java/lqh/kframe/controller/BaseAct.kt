@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
@@ -13,10 +14,8 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import lqh.kframe.R
-import lqh.kframe.jetpack.lifecycle.BaseActivityLifecycle
 import lqh.kframe.util.KeyBoardUtils
-import lqh.kframe.util.ScreenUtils
-import lqh.kframe.util.SystemUtils
+import lqh.kframe.util.UIUtils
 import lqh.kframe.weight.statuslayout.StatusConfig
 import lqh.kframe.weight.statuslayout.StatusLayout
 import me.imid.swipebacklayout.lib.SwipeBackLayout
@@ -75,8 +74,6 @@ abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActi
 
         statusLayout.switchStatusLayout(StatusLayout.LOADING_STATUS)
 
-        BaseActivityLifecycle(this, this, statusLayout)
-
         initToolbar()
 
         initData()
@@ -114,6 +111,7 @@ abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActi
     /**
      * 获取资源文件 ID
      */
+    @LayoutRes
     protected abstract fun getLayoutId(): Int
 
     /**
@@ -131,11 +129,11 @@ abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActi
         // 标题栏适配
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (appBarLayout != null && toolbar != null) {
-                if (!ScreenUtils.isFullScreen(this)) {
+                if (!UIUtils.isFullScreen(this)) {
                     val toolbarParams = toolbar.layoutParams
-                    toolbarParams.height = ScreenUtils.getStatusBarHeight() + toolbarParams.height
+                    toolbarParams.height = UIUtils.getStatusBarHeight() + toolbarParams.height
                     toolbar.layoutParams = toolbarParams
-                    toolbar.setPadding(0, ScreenUtils.getStatusBarHeight(), 0, 0)
+                    toolbar.setPadding(0, UIUtils.getStatusBarHeight(), 0, 0)
                 }
             }
         }
@@ -212,7 +210,7 @@ abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActi
      * @see clickView(android.view.View) 方法
      */
     override fun onClick(v: View) {
-        if (SystemUtils.isFastClick()) {
+        if (UIUtils.isFastClick()) {
             return
         } else {
             clickView(v)
@@ -237,4 +235,9 @@ abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActi
      * 在这个方法中做点击事件的处理
      */
     open fun clickView(v: View) {}
+
+    override fun onPause() {
+        super.onPause()
+        KeyBoardUtils.hideKeyboard(this, statusLayout)
+    }
 }
