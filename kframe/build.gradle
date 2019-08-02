@@ -59,5 +59,6 @@ dependencies {
     api rootProject.ext.dependencies["glide"]
     annotationProcessor rootProject.ext.dependencies["glideAnnotation"]
     // RecyclerView 辅助工具
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
     annotationProcessor rootProject.ext.dependencies["BRVAH"]
 }

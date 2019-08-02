@@ -17,7 +17,7 @@ import lqh.kframe.util.ResUtils
 import lqh.kframe.util.dp2px
 
 /**
- * 功能：
+ * 功能：底部 bottom tab 布局，请不要在 XML 代码中添加布局，添加的布局会在初始化时被移除
  * -------------------------------------------------------------------------------------------------
  * 创建者：@author lqh
  * -------------------------------------------------------------------------------------------------
@@ -77,7 +77,12 @@ class BottomTabLayout @JvmOverloads constructor(context: Context, attrs: Attribu
     var onTabClickListener: OnBottomTabClickListener? = null
 
     init {
+        /**
+         * 先移除所有 View
+         */
+        removeAllViews()
         orientation = VERTICAL
+        clipChildren = false
 
         flContainer.id = R.id.flContainer
         flContainer.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, 0, 1f)
@@ -86,7 +91,6 @@ class BottomTabLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         cuttingLine.setBackgroundColor(Color.parseColor("#DCDCDC"))
 
         tabHost.gravity = Gravity.CENTER
-        tabHost.clipChildren = false
         tabHost.orientation = HORIZONTAL
         tabHost.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, 49.dp2px())
 
@@ -249,8 +253,8 @@ class BottomTabLayout @JvmOverloads constructor(context: Context, attrs: Attribu
             val fragment = frgList.get(index)
             if (fragment != null && currentFragment != fragment) {
                 val transaction = fragment.fragmentManager?.beginTransaction()
-                transaction?.let {ft->
-                    currentFragment?.let {curFrg->
+                transaction?.let { ft ->
+                    currentFragment?.let { curFrg ->
                         if (!curFrg.isHidden) {
                             ft.hide(curFrg)
                         }
