@@ -2,6 +2,8 @@ package lqh.wanandroid
 
 import android.app.Application
 import com.tencent.smtt.sdk.QbSdk
+import lqh.kframe.network.RetrofitFactory
+import lqh.wanandroid.config.AppConfig
 
 /**
  * 功能：
@@ -17,5 +19,7 @@ class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
         QbSdk.initX5Environment(this@MyApp, null)
+
+        RetrofitFactory.INSTANCE.init(AppConfig.HOST, AppConfig.REQUEST_TIME_OUT, AppConfig.IS_PRO)
     }
 }

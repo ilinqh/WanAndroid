@@ -12,7 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MainActivity">
+        <activity android:name=".SecondActivity"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
