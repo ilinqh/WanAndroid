@@ -42,7 +42,7 @@ class RetrofitFactory private constructor() {
         private fun getHttpLoggingInterceptor(): HttpLoggingInterceptor {
             val interceptor = HttpLoggingInterceptor(
                 HttpLoggingInterceptor.Logger {
-                    LogUtils.e(it)
+                    LogUtils.d(it)
                 })
             interceptor.level = HttpLoggingInterceptor.Level.BODY
             return interceptor

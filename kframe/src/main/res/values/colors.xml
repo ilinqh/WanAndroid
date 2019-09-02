@@ -6,8 +6,8 @@
 
     <color name="colorRoot">#F6F8F9</color>
     <color name="color_333333">#333333</color>
-    <color name="color_tab_name_normal">#999999</color>
-    <color name="color_tab_name_selected">#333333</color>
+    <color name="color_tab_name_normal">#D3CCD6</color>
+    <color name="color_tab_name_selected">#F9906F</color>
     <color name="color_tip_point">#E70E0E</color>
 
 </resources>

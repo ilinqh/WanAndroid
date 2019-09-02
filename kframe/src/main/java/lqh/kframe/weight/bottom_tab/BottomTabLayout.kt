@@ -5,13 +5,14 @@ import android.graphics.Color
 import android.util.AttributeSet
 import android.util.SparseArray
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.item_bottom_tab.view.*
+import androidx.fragment.app.FragmentManager
 import lqh.kframe.R
 import lqh.kframe.util.ResUtils
 import lqh.kframe.util.dp2px
@@ -27,8 +28,11 @@ import lqh.kframe.util.dp2px
  * 编号|更新日期|更新人|更新内容
  */
 
-class BottomTabLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    LinearLayout(context, attrs, defStyleAttr) {
+class BottomTabLayout @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : LinearLayout(context, attrs, defStyleAttr) {
 
     /**
      * 用于存放 Fragment
@@ -54,14 +58,14 @@ class BottomTabLayout @JvmOverloads constructor(context: Context, attrs: Attribu
     /**
      * 用于存放用户传进来的 BottomTab 对象列表
      */
-    private val tabList: ArrayList<BottomTab> by lazy {
+    private val tabList by lazy {
         ArrayList<BottomTab>()
     }
 
     /**
      * 内部真正使用的 tab 视图列表
      */
-    private val tabViewList: ArrayList<View> by lazy {
+    private val tabViewList by lazy {
         ArrayList<View>()
     }
 
@@ -70,11 +74,13 @@ class BottomTabLayout @JvmOverloads constructor(context: Context, attrs: Attribu
      */
     private var currentFragment: Fragment? = null
 
-    private val frgList: SparseArray<Fragment> by lazy {
+    private val frgList by lazy {
         SparseArray<Fragment>()
     }
 
     var onTabClickListener: OnBottomTabClickListener? = null
+
+    var fragmentManager: FragmentManager? = null
 
     init {
         /**
@@ -113,8 +119,14 @@ class BottomTabLayout @JvmOverloads constructor(context: Context, attrs: Attribu
 
     private fun initTabView(index: Int): View {
         val tab = tabList[index]
-        val view = tab.view ?: View.inflate(context, R.layout.item_bottom_tab, tabHost)
+        val view = tab.view ?: LayoutInflater.from(context).inflate(
+            R.layout.item_bottom_tab,
+            tabHost,
+            false
+        )
         if (tab.view == null) {
+            val tabImage = view.findViewById<ImageView>(R.id.tabImage)
+            val tabText = view.findViewById<TextView>(R.id.tabText)
             if (tab.showIcon) {
                 tabImage.visibility = View.VISIBLE
                 tabImage.setImageResource(
@@ -181,7 +193,7 @@ class BottomTabLayout @JvmOverloads constructor(context: Context, attrs: Attribu
     fun clearAllSelect() {
         for (position in tabViewList.indices) {
             val bottomTab = tabList[position]
-            bottomTab.view?.let {
+            if (bottomTab.view == null) {
                 val tabView = tabViewList[position]
                 val imageView = tabView.findViewById<ImageView>(R.id.tabImage)
                 val textView = tabView.findViewById<TextView>(R.id.tabText)
@@ -191,7 +203,12 @@ class BottomTabLayout @JvmOverloads constructor(context: Context, attrs: Attribu
                 }
 
                 if (bottomTab.showText) {
-                    textView.setTextColor(ResUtils.getColor(context, tabList[position].tabNameColorNor))
+                    textView.setTextColor(
+                        ResUtils.getColor(
+                            context,
+                            tabList[position].tabNameColorNor
+                        )
+                    )
                 }
             }
         }
@@ -252,7 +269,7 @@ class BottomTabLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         tab.tabFragment?.let {
             val fragment = frgList.get(index)
             if (fragment != null && currentFragment != fragment) {
-                val transaction = fragment.fragmentManager?.beginTransaction()
+                val transaction = fragmentManager?.beginTransaction()
                 transaction?.let { ft ->
                     currentFragment?.let { curFrg ->
                         if (!curFrg.isHidden) {
@@ -269,7 +286,6 @@ class BottomTabLayout @JvmOverloads constructor(context: Context, attrs: Attribu
             }
         }
     }
-
 
     fun hideFragment(fragment: Fragment) {
         fragment.fragmentManager?.beginTransaction()?.hide(fragment)?.commitAllowingStateLoss()

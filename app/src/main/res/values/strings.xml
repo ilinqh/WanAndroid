@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Wan Android</string>
+    <string name="str_tab_home">首页</string>
+    <string name="str_tab_mine">我的</string>
 </resources>

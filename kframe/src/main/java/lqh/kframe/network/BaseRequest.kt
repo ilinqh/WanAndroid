@@ -2,6 +2,7 @@ package lqh.kframe.network
 
 import android.content.Context
 import android.text.TextUtils
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.SingleSource
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -56,7 +57,7 @@ class BaseRequest<T, E> constructor(val context: Context, var isShowDialog: Bool
         } else {
             retroService = RetrofitFactory.getRetroService(service)
 
-            Single.just(params)
+            Observable.just(params)
                 .flatMap {
                     listener.apply(it)
                 }
@@ -86,12 +87,12 @@ class BaseRequest<T, E> constructor(val context: Context, var isShowDialog: Bool
         /**
          * 发送网络请求
          */
-        fun apply(params: Map<String, Any>): SingleSource<HttpResponse<E>>
+        fun apply(params: Map<String, Any>): Observable<HttpResponse<E>>
 
         /**
          * 请求成功
          */
-        fun onRequestSuccess(e: E?)
+        fun onRequestSuccess(response: E?)
 
         /**
          * 请求失败

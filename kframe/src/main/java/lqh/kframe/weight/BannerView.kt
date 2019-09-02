@@ -14,7 +14,6 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.layout_banner_view.view.*
-import kotlinx.android.synthetic.main.layout_banner_view_item.view.*
 import lqh.kframe.R
 import lqh.kframe.util.dp2px
 
@@ -28,8 +27,10 @@ import lqh.kframe.util.dp2px
  * 更新历史
  * 编号|更新日期|更新人|更新内容
  */
-class BannerView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    FrameLayout(context, attrs, defStyleAttr) {
+class BannerView (
+    context: Context,
+    attrs: AttributeSet? = null
+) : FrameLayout(context, attrs) {
 
     companion object {
         const val TAG = "BannerView"
@@ -45,7 +46,8 @@ class BannerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         const val CHECK_TIME: Long = 5000
     }
 
-    private var contentView = LayoutInflater.from(context).inflate(R.layout.layout_banner_view, this, true)
+    private var contentView =
+        LayoutInflater.from(context).inflate(R.layout.layout_banner_view, this, true)
 
     /**
      * banner 数量
@@ -55,7 +57,9 @@ class BannerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     /**
      * 存放 banner
      */
-    private lateinit var viewList: ArrayList<View>
+    private val viewList by lazy {
+        ArrayList<View>()
+    }
 
     /**
      * 是否自动播放
@@ -116,11 +120,11 @@ class BannerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     /**
      * banner 适配器
      */
-    var adapter: BannerAdapter
+    private var adapter: BannerAdapter
     /**
      * banner 点击事件
      */
-    var listener: OnBannerItemClickListener? = null
+    var itemClickListener: OnBannerItemClickListener? = null
 
     /**
      * 图片显示配置
@@ -177,11 +181,15 @@ class BannerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         currentItem = 1
         viewPager.currentItem = currentItem
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
             }
 
             override fun onPageSelected(position: Int) {
-                for (i in 0..llDot.childCount) {
+                for (i in 0 until llDot.childCount) {
                     val child = llDot.getChildAt(i)
                     child.setBackgroundResource(dotImage)
                     if (i == position - 1) {
@@ -229,9 +237,10 @@ class BannerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
      * 设置 Banner 图
      */
     private fun setViewList(list: ArrayList<String>) {
-        viewList = ArrayList()
-        for (i in 0..count + LEAST_ITEM) {
-            val view = LayoutInflater.from(context).inflate(R.layout.layout_banner_view_item, viewPager, false)
+        for (i in 0 until count + LEAST_ITEM) {
+            val view = LayoutInflater.from(context)
+                .inflate(R.layout.layout_banner_view_item, viewPager, false)
+            val imageView = view.findViewById<RoundImageView>(R.id.imageView)
             if (imageLp != null) {
                 imageView.layoutParams = imageLp
             }
@@ -300,6 +309,7 @@ class BannerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         currentItem = 1
         // 设置指示器
         setIndicator()
+        adapter.notifyDataSetChanged()
         // 开始轮播
         startPlay()
     }
@@ -325,7 +335,7 @@ class BannerView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val view = viewList[position]
             view.setOnClickListener {
-                listener?.onBannerItemClickListener(position - 1)
+                itemClickListener?.onBannerItemClickListener(position - 1)
             }
             container.addView(view)
             return view

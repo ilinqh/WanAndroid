@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.text.TextUtils
 import android.view.LayoutInflater
+import io.reactivex.Observer
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
 import lqh.kframe.R
@@ -21,7 +22,7 @@ import retrofit2.HttpException
  * 编号|更新日期|更新人|更新内容
  */
 abstract class BaseObserver<T>(var context: Context, showProgress: Boolean) :
-    SingleObserver<HttpResponse<T>> {
+    Observer<HttpResponse<T>> {
 
     companion object {
         /**
@@ -61,7 +62,11 @@ abstract class BaseObserver<T>(var context: Context, showProgress: Boolean) :
 
     override fun onSubscribe(d: Disposable) {}
 
-    override fun onSuccess(response: HttpResponse<T>) {
+    override fun onComplete() {
+        dismissDialog()
+    }
+
+    override fun onNext(response: HttpResponse<T>) {
         dismissDialog()
         try {
             if (response.errorCode == RESPONSE_CODE_SUCCESS) {

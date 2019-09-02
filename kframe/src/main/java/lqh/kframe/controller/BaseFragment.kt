@@ -45,7 +45,7 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment(), View.OnClickListe
     /**
      * 根视图
      */
-    public lateinit var rootView: View
+    lateinit var rootView: View
 
     /**
      * 数据绑定实体
@@ -69,7 +69,7 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment(), View.OnClickListe
      */
     protected lateinit var errorView: View
 
-    public lateinit var mContext: Context
+    lateinit var mContext: Context
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
