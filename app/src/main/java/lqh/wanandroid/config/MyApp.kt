@@ -1,9 +1,8 @@
-package lqh.wanandroid
+package lqh.wanandroid.config
 
 import android.app.Application
 import com.tencent.smtt.sdk.QbSdk
 import lqh.kframe.network.RetrofitFactory
-import lqh.wanandroid.config.AppConfig
 
 /**
  * 功能：

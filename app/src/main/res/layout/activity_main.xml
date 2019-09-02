@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            tools:context=".MainActivity">
+            tools:context=".activity.MainActivity">
 
             <lqh.kframe.weight.RoundImageView
                 android:id="@+id/imageView"
@@ -41,23 +41,13 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:radius="0dp" />
 
-            <EditText
-                android:id="@+id/editText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:fitsSystemWindows="true"
-                android:singleLine="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
             <Button
                 android:id="@+id/button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:onClick="@{click::onClick}"
                 android:text="@{name}"
-                app:layout_constraintBottom_toTopOf="@+id/editText"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 

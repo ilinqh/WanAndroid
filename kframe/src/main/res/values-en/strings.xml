@@ -5,4 +5,5 @@
     <string name="str_loading">loading…</string>
     <string name="str_error_tip">load error. click empty to refresh.</string>
     <string name="str_empty_data">no data…</string>
+    <string name="tip_please_check_network_connect_first">please confirm that the network is connected</string>
 </resources>

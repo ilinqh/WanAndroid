@@ -24,5 +24,5 @@ object AppConfig {
     /**
      * 是否正式环境
      */
-    const val IS_PRO = true
+    const val IS_PRO = false
 }

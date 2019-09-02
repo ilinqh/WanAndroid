@@ -22,7 +22,7 @@ class NetworkUtils {
          * @param context context
          * @return 网络连接状态
          */
-        fun isNetworkConnext(context: Context): Boolean {
+        fun isNetworkConnect(context: Context): Boolean {
             val manager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val networkInfo = manager.activeNetworkInfo
             return networkInfo?.isAvailable == true

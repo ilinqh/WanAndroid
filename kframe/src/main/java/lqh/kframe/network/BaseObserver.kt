@@ -3,11 +3,12 @@ package lqh.kframe.network
 import android.app.Dialog
 import android.content.Context
 import android.text.TextUtils
+import android.view.LayoutInflater
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
+import lqh.kframe.R
 import lqh.kframe.util.LogUtils
 import retrofit2.HttpException
-import java.net.ConnectException
 
 /**
  * 功能：网络请求观察者的基类
@@ -19,28 +20,26 @@ import java.net.ConnectException
  * 更新历史
  * 编号|更新日期|更新人|更新内容
  */
-abstract class BaseObserver<T> : SingleObserver<HttpResponse<T>> {
+abstract class BaseObserver<T>(var context: Context, showProgress: Boolean) :
+    SingleObserver<HttpResponse<T>> {
 
     companion object {
         /**
          * 代表执行成功
          */
-        private val RESPONSE_CODE_SUCCESS = 0
+        private const val RESPONSE_CODE_SUCCESS = 0
         /**
          *  代表登录失效
          */
-        private val RESPONSE_CODE_ERROR = -1001
+        const val RESPONSE_CODE_ERROR = -1001
     }
-
-    private var context: Context? = null
 
     private var dialog: Dialog? = null
 
     private var code = -1
-    private var message: String? = "未知的错误"
+    private var message: String = "未知的错误"
 
-    fun BaseObserver(context: Context, showProgress: Boolean) {
-        this.context = context
+    init {
         if (showProgress) {
             dialog = createDialog()
             dialog?.show()
@@ -52,9 +51,15 @@ abstract class BaseObserver<T> : SingleObserver<HttpResponse<T>> {
      *
      * @return
      */
-    protected abstract fun createDialog(): Dialog
+    private fun createDialog(): Dialog {
+        val loadingDialog = Dialog(context, R.style.AppTheme_OutsideUnCloseDialog)
+        val loadingView = LayoutInflater.from(context).inflate(R.layout.layout_loading_status, null, false)
+        loadingDialog.setCancelable(false)
+        loadingDialog.setContentView(loadingView)
+        return loadingDialog
+    }
 
-    override fun onSubscribe(d: Disposable?) {}
+    override fun onSubscribe(d: Disposable) {}
 
     override fun onSuccess(response: HttpResponse<T>) {
         dismissDialog()
@@ -78,7 +83,7 @@ abstract class BaseObserver<T> : SingleObserver<HttpResponse<T>> {
                 message = "系统正在更新，请稍后重试"
             }
         } else {
-            message = e.message
+            message = e.message ?: "未知的错误"
         }
         LogUtils.e("Error--> $message")
 
@@ -93,7 +98,7 @@ abstract class BaseObserver<T> : SingleObserver<HttpResponse<T>> {
     /**
      * 请求失败
      */
-    abstract fun requestFail(errorCode: Int, errorMsg: String?, data: T?)
+    abstract fun requestFail(errorCode: Int, errorMsg: String, data: T?)
 
     private fun dismissDialog() {
         dialog?.dismiss()

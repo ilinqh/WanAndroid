@@ -29,7 +29,7 @@ class RetrofitFactory private constructor() {
         private var BASE_URL = ""
         // 请求超时时间
         private var TIME_OUT = 0L
-        // 是否测试/开发环境
+        // 是否生产环境
         private var IS_PRO = true
 
         val INSTANCE: RetrofitFactory by lazy {

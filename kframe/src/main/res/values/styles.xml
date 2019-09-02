@@ -26,4 +26,15 @@
         <item name="android:windowEnterAnimation">@anim/window_in_from_right</item>
         <item name="android:windowExitAnimation">@anim/window_out_to_right</item>
     </style>
+
+    <style name="AppTheme.OutsideUnCloseDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 </resources>

@@ -1,10 +1,12 @@
-package lqh.wanandroid
+package lqh.wanandroid.activity
 
 import android.graphics.Color
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import lqh.kframe.controller.BaseAct
+import lqh.kframe.util.LogUtils
 import lqh.kframe.weight.statuslayout.StatusLayout
+import lqh.wanandroid.R
 import lqh.wanandroid.databinding.ActivityMainBinding
 
 class MainActivity : BaseAct<ActivityMainBinding>() {
@@ -30,7 +32,7 @@ class MainActivity : BaseAct<ActivityMainBinding>() {
 //                Toast.makeText(this, "ImageView", Toast.LENGTH_SHORT).show()
 //            }
             R.id.button -> {
-                SecondActivity.startAct(this@MainActivity)
+                LogUtils.e("hhhh")
             }
         }
     }
