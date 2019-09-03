@@ -1,4 +1,4 @@
-package lqh.wanandroid.fragment
+package lqh.wanandroid.activity.common
 
 import android.content.Context
 import android.content.Intent

@@ -3,11 +3,10 @@ package lqh.wanandroid.fragment
 import android.view.View
 import kotlinx.android.synthetic.main.frg_home.*
 import lqh.kframe.controller.BaseFragment
-import lqh.kframe.util.LogUtils
-import lqh.kframe.util.TipUtils
 import lqh.kframe.weight.BannerView
 import lqh.kframe.weight.statuslayout.StatusLayout
 import lqh.wanandroid.R
+import lqh.wanandroid.activity.common.WebAct
 import lqh.wanandroid.databinding.FrgHomeBinding
 import lqh.wanandroid.model.home.Banner
 import lqh.wanandroid.mvp.contract.home.HomeContract
