@@ -228,7 +228,9 @@ abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActi
     }
 
     fun back(view: View) {
-        finish()
+        if (view.id == R.id.btnBack) {
+            finish()
+        }
     }
 
     /**

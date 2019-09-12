@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="title"
+            name="mTitle"
             type="String" />
 
         <variable
@@ -96,7 +96,7 @@
                     android:ellipsize="middle"
                     android:gravity="center"
                     android:singleLine="true"
-                    android:text="@{title}"
+                    android:text="@{mTitle}"
                     android:textColor="@color/color_333333"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"

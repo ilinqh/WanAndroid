@@ -1,8 +1,9 @@
-package lqh.wanandroid.fragment
+package lqh.wanandroid.fragment.home
 
 import android.view.View
 import kotlinx.android.synthetic.main.frg_home.*
 import lqh.kframe.controller.BaseFragment
+import lqh.kframe.util.UIUtils
 import lqh.kframe.weight.BannerView
 import lqh.kframe.weight.statuslayout.StatusLayout
 import lqh.wanandroid.R

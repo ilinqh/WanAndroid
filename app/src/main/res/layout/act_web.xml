@@ -17,7 +17,7 @@
 
         <include
             layout="@layout/tb_common_primary"
-            app:title="@{title}" />
+            app:mTitle="@{title}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

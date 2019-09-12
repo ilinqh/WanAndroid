@@ -1,6 +1,8 @@
-package lqh.wanandroid.fragment
+package lqh.wanandroid.fragment.mine
 
+import android.view.View
 import lqh.kframe.controller.BaseFragment
+import lqh.kframe.weight.statuslayout.StatusLayout
 import lqh.wanandroid.R
 import lqh.wanandroid.databinding.FrgHomeBinding
 
@@ -15,11 +17,18 @@ import lqh.wanandroid.databinding.FrgHomeBinding
  * 编号|更新日期|更新人|更新内容
  */
 class MineFrg : BaseFragment<FrgHomeBinding>() {
-    override fun initData() {
 
+    override fun initData() {
+        statusLayout.switchStatusLayout(StatusLayout.NORMAL_STATUS)
     }
 
     override fun getLayoutId(): Int {
         return R.layout.frg_mine
+    }
+
+    override fun clickView(v: View) {
+        when (v.id) {
+
+        }
     }
 }

@@ -3,12 +3,14 @@ package lqh.wanandroid.activity
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import lqh.kframe.controller.BaseAct
+import lqh.kframe.util.AppUtils
+import lqh.kframe.util.LogUtils
 import lqh.kframe.weight.bottom_tab.BottomTab
 import lqh.kframe.weight.statuslayout.StatusLayout
 import lqh.wanandroid.R
 import lqh.wanandroid.databinding.ActivityMainBinding
-import lqh.wanandroid.fragment.HomeFrg
-import lqh.wanandroid.fragment.MineFrg
+import lqh.wanandroid.fragment.home.HomeFrg
+import lqh.wanandroid.fragment.mine.MineFrg
 
 /**
  * 功能：
@@ -66,6 +68,11 @@ class MainActivity : BaseAct<ActivityMainBinding>() {
         when (v.id) {
 
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        LogUtils.e("run on foreground ${AppUtils.appOnForeground(this)}")
     }
 
 }
