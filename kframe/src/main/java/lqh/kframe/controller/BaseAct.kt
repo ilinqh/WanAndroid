@@ -5,16 +5,19 @@ import android.os.Build
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.plus
 import lqh.kframe.R
 import lqh.kframe.util.KeyBoardUtils
+import lqh.kframe.util.LogUtils
 import lqh.kframe.util.UIUtils
 import lqh.kframe.weight.statuslayout.StatusConfig
 import lqh.kframe.weight.statuslayout.StatusLayout
@@ -22,7 +25,6 @@ import me.imid.swipebacklayout.lib.SwipeBackLayout
 import me.imid.swipebacklayout.lib.Utils
 import me.imid.swipebacklayout.lib.app.SwipeBackActivityBase
 import me.imid.swipebacklayout.lib.app.SwipeBackActivityHelper
-
 
 /**
  * 功能：Activity 基类
@@ -34,8 +36,8 @@ import me.imid.swipebacklayout.lib.app.SwipeBackActivityHelper
  * 更新历史
  * 编号|更新日期|更新人|更新内容
  */
-abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActivityBase, View.OnClickListener,
-    StatusLayout.OnLayoutClickListener {
+abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActivityBase,
+    View.OnClickListener, StatusLayout.OnLayoutClickListener {
 
     private lateinit var mHelper: SwipeBackActivityHelper
 
@@ -46,17 +48,39 @@ abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActi
     /**
      * RecyclerView 数据加载 View
      */
-    protected lateinit var loadingView: View
+    protected val loadingView: View by lazy {
+        layoutInflater.inflate(R.layout.layout_loading_status, statusLayout, false)
+    }
 
     /**
      * RecyclerView 没有数据显示 View
      */
-    protected lateinit var emptyView: View
+    protected val emptyView: View by lazy {
+        layoutInflater.inflate(R.layout.layout_empty_status, statusLayout, false).apply {
+            this.setOnClickListener {
+                onRefreshData()
+            }
+        }
+    }
 
     /**
      * RecyclerView 加载出错显示 View
      */
-    protected lateinit var errorView: View
+    protected val errorView: View by lazy {
+        layoutInflater.inflate(R.layout.layout_error_status, statusLayout, false).apply {
+            this.setOnClickListener {
+                onRefreshData()
+            }
+        }
+    }
+
+    protected val mainScope by lazy {
+        MainScope() + CoroutineExceptionHandler { _, throwable ->
+            throwable.message?.let {
+                LogUtils.e(it)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         mHelper = SwipeBackActivityHelper(this)
@@ -149,7 +173,12 @@ abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActi
      */
     protected open fun addStatus() {
         // 加载中...
-        statusLayout.addStatus(StatusConfig(StatusLayout.LOADING_STATUS, layoutRes = R.layout.layout_loading_status))
+        statusLayout.addStatus(
+            StatusConfig(
+                StatusLayout.LOADING_STATUS,
+                layoutRes = R.layout.layout_loading_status
+            )
+        )
         // 出错
         statusLayout.addStatus(
             StatusConfig(
@@ -159,26 +188,12 @@ abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActi
             )
         )
         // 无数据
-        statusLayout.addStatus(StatusConfig(StatusLayout.EMPTY_STATUS, layoutRes = R.layout.layout_empty_status))
-    }
-
-    /**
-     * 若 Activity 中有 RecyclerView 同时需要切换不同状态，一定要先调用此方法初始化各个视图
-     */
-    protected fun initBaseRecyclerView(recyclerView: RecyclerView) {
-        val parent = recyclerView.parent as ViewGroup
-        // 加载中
-        loadingView = layoutInflater.inflate(R.layout.layout_loading_status, parent, false)
-        // 出错了
-        errorView = layoutInflater.inflate(R.layout.layout_error_status, parent, false)
-        errorView.setOnClickListener {
-            onRefreshData()
-        }
-        // 空数据
-        emptyView = layoutInflater.inflate(R.layout.layout_empty_status, parent, false)
-        emptyView.setOnClickListener {
-            onRefreshData()
-        }
+        statusLayout.addStatus(
+            StatusConfig(
+                StatusLayout.EMPTY_STATUS,
+                layoutRes = R.layout.layout_empty_status
+            )
+        )
     }
 
     // 点击空白区域隐藏软键盘
@@ -210,10 +225,10 @@ abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActi
      * @see clickView(android.view.View) 方法
      */
     override fun onClick(v: View) {
-        if (UIUtils.isFastClick()) {
-            return
-        } else {
-            clickView(v)
+        when {
+            UIUtils.isFastClick() -> return
+            v.id == R.id.btnBack -> finish()
+            else -> clickView(v)
         }
     }
 
@@ -227,12 +242,6 @@ abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActi
         }
     }
 
-    fun back(view: View) {
-        if (view.id == R.id.btnBack) {
-            finish()
-        }
-    }
-
     /**
      * 在这个方法中做点击事件的处理
      */
@@ -241,5 +250,10 @@ abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActi
     override fun onPause() {
         super.onPause()
         KeyBoardUtils.hideKeyboard(this, statusLayout)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mainScope.cancel()
     }
 }

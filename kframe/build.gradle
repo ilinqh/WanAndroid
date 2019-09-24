@@ -61,4 +61,7 @@ dependencies {
     // RecyclerView 辅助工具
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
     annotationProcessor rootProject.ext.dependencies["BRVAH"]
+
+    // 协程
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines"
 }
