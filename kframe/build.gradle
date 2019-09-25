@@ -47,7 +47,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     // Retrofit 及 RxJava
-    api rootProject.ext.dependencies["retrofit"]
+    api 'com.squareup.retrofit2:retrofit:2.6.2'
     api rootProject.ext.dependencies["retrofit-converter-gson"]
     api "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
     api rootProject.ext.dependencies["okhttp-logging-interceptor"]
@@ -63,5 +63,6 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["BRVAH"]
 
     // 协程
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines"
+    api 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
 }

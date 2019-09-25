@@ -40,12 +40,11 @@ class RetrofitFactory private constructor() {
          * 构建打印日志拦截器
          */
         private fun getHttpLoggingInterceptor(): HttpLoggingInterceptor {
-            val interceptor = HttpLoggingInterceptor(
-                HttpLoggingInterceptor.Logger {
-                    LogUtils.d(it)
-                })
-            interceptor.level = HttpLoggingInterceptor.Level.BODY
-            return interceptor
+            return HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
+                LogUtils.d(it)
+            }).apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            }
         }
 
         private fun buildGson(): Gson {
@@ -56,8 +55,8 @@ class RetrofitFactory private constructor() {
         }
 
         private val client: OkHttpClient by lazy {
-            val builder = OkHttpClient.Builder()
-            builder.addNetworkInterceptor(getHttpLoggingInterceptor())
+            OkHttpClient.Builder()
+                .addNetworkInterceptor(getHttpLoggingInterceptor())
                 .addInterceptor { chain ->
                     // 添加公共的头部
                     val request = chain.request()

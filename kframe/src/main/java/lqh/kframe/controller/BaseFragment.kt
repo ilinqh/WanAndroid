@@ -70,7 +70,7 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment(), View.OnClickListe
      */
     protected val emptyView: View by lazy {
         layoutInflater.inflate(R.layout.layout_empty_status, statusLayout, false).apply {
-            this.setOnClickListener {
+            setOnClickListener {
                 onRefreshData()
             }
         }
@@ -81,7 +81,7 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment(), View.OnClickListe
      */
     protected val errorView: View by lazy {
         layoutInflater.inflate(R.layout.layout_error_status, statusLayout, false).apply {
-            this.setOnClickListener {
+            setOnClickListener {
                 onRefreshData()
             }
         }
