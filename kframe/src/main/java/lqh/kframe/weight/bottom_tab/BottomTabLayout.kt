@@ -90,15 +90,21 @@ class BottomTabLayout @JvmOverloads constructor(
         orientation = VERTICAL
         clipChildren = false
 
-        flContainer.id = R.id.flContainer
-        flContainer.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, 0, 1f)
+        flContainer.apply {
+            id = R.id.flContainer
+            layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, 0, 1f)
+        }
 
-        cuttingLine.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, 1.dp2px())
-        cuttingLine.setBackgroundColor(Color.parseColor("#DCDCDC"))
+        cuttingLine.apply {
+            layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, 1.dp2px())
+            setBackgroundColor(Color.parseColor("#DCDCDC"))
+        }
 
-        tabHost.gravity = Gravity.CENTER
-        tabHost.orientation = HORIZONTAL
-        tabHost.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, 49.dp2px())
+        tabHost.apply {
+            gravity = Gravity.CENTER
+            orientation = HORIZONTAL
+            layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, 49.dp2px())
+        }
 
         addView(flContainer)
         addView(cuttingLine)
@@ -127,31 +133,37 @@ class BottomTabLayout @JvmOverloads constructor(
         if (tab.view == null) {
             val tabImage = view.findViewById<ImageView>(R.id.tabImage)
             val tabText = view.findViewById<TextView>(R.id.tabText)
-            if (tab.showIcon) {
-                tabImage.visibility = View.VISIBLE
-                tabImage.setImageResource(
-                    if (tab.isSelect)
-                        tab.tabIconSel
-                    else
-                        tab.tabIconNor
-                )
-            } else {
-                tabImage.visibility = View.GONE
-            }
-            if (tab.showText) {
-                tabText.visibility = View.VISIBLE
-                tabText.setText(tab.tabName)
-                tabText.setTextColor(
-                    ResUtils.getColor(
-                        context,
-                        if (tab.isSelect)
-                            tab.tabNameColorSel
-                        else
-                            tab.tabNameColorNor
+            tabImage.apply {
+                visibility = if (tab.showIcon) {
+                    setImageResource(
+                        if (tab.isSelect) {
+                            tab.tabIconSel
+                        } else {
+                            tab.tabIconNor
+                        }
                     )
-                )
-            } else {
-                tabText.visibility = View.GONE
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
+            }
+            tabText.apply {
+                visibility = if (tab.showText) {
+                    setText(tab.tabName)
+                    setTextColor(
+                        ResUtils.getColor(
+                            context,
+                            if (tab.isSelect) {
+                                tab.tabNameColorSel
+                            } else {
+                                tab.tabNameColorNor
+                            }
+                        )
+                    )
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
             }
         }
         tabViewList.add(view)

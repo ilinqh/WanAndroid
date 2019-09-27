@@ -57,14 +57,16 @@ class RoundImageView @JvmOverloads constructor(context: Context, attrs: Attribut
         setLayerType(View.LAYER_TYPE_HARDWARE, null)
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         mPath.reset()
         mPath.addRoundRect(mRectF, rids, Path.Direction.CW)
-        canvas?.drawFilter = paintFlagsDrawFilter
-        canvas?.save()
-        canvas?.clipPath(mPath)
+        canvas.apply {
+            drawFilter = paintFlagsDrawFilter
+            save()
+            clipPath(mPath)
+        }
         super.onDraw(canvas)
-        canvas?.restore()
+        canvas.restore()
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {

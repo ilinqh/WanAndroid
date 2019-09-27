@@ -105,6 +105,7 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment(), View.OnClickListe
         binding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
         mContext = binding.root.context
         statusLayout = StatusLayout.init(mContext, binding.root)
+        statusLayout.onLayoutClickListener = this
         addStatus()
         return statusLayout
     }

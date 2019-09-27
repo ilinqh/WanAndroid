@@ -1,10 +1,20 @@
 package lqh.wanandroid.fragment.mine
 
+import android.view.LayoutInflater
 import android.view.View
+import kotlinx.android.synthetic.main.frg_mine.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import lqh.kframe.controller.BaseFragment
+import lqh.kframe.util.LogUtils
 import lqh.kframe.weight.statuslayout.StatusLayout
 import lqh.wanandroid.R
+import lqh.wanandroid.adapter.TestAdapter
+import lqh.wanandroid.coroutines.GitHubServiceApi
+import lqh.wanandroid.coroutines.TestUtils
+import lqh.wanandroid.coroutines.User
 import lqh.wanandroid.databinding.FrgHomeBinding
+import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * 功能：
@@ -18,8 +28,55 @@ import lqh.wanandroid.databinding.FrgHomeBinding
  */
 class MineFrg : BaseFragment<FrgHomeBinding>() {
 
+    private val COLOR_LIST =
+        arrayListOf(R.color.colorAccent, R.color.colorPrimary, R.color.color_666666)
+
+    private val data by lazy {
+        arrayListOf<Int>()
+    }
+
+    private val adapter by lazy {
+        TestAdapter(data)
+    }
+
+    val gitHubServiceApi by lazy {
+        retrofit2.Retrofit.Builder()
+            .baseUrl("https://api.github.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            //添加对 Deferred 的支持
+//            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .build()
+            .create(GitHubServiceApi::class.java)
+    }
+
     override fun initData() {
+
         statusLayout.switchStatusLayout(StatusLayout.NORMAL_STATUS)
+/*
+
+        for (i in 0 until 20) {
+            data.add(COLOR_LIST[i % COLOR_LIST.size])
+        }
+*/
+
+        GlobalScope.launch {
+            try {
+                val user : User = gitHubServiceApi.getUser("savage-lin")
+                LogUtils.e("mainScope$user")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        val headerView =
+            LayoutInflater.from(mContext).inflate(R.layout.header_view, recyclerView, false)
+        headerView.setOnClickListener {
+//            TestUtils.addShortcut(mContext)
+        }
+        adapter.setHeaderView(headerView)
+        adapter.setHeaderAndEmpty(true)
+        recyclerView.adapter = adapter
+        adapter.emptyView = emptyView
     }
 
     override fun getLayoutId(): Int {
@@ -28,7 +85,6 @@ class MineFrg : BaseFragment<FrgHomeBinding>() {
 
     override fun clickView(v: View) {
         when (v.id) {
-
         }
     }
 }

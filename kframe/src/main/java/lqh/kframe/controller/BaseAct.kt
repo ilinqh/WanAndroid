@@ -147,7 +147,7 @@ abstract class BaseAct<T : ViewDataBinding> : AppCompatActivity(), SwipeBackActi
      * 初始化状态栏
      */
     private fun initToolbar() {
-        val appBarLayout: AppBarLayout? = binding.root.findViewById(R.id.layout_app_bar)
+        val appBarLayout: AppBarLayout? = binding.root.findViewById(R.id.layoutAppBar)
         val toolbar: Toolbar? = binding.root.findViewById(R.id.toolbar)
 
         // 标题栏适配

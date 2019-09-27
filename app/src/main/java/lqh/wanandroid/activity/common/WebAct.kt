@@ -70,6 +70,8 @@ class WebAct : BaseAct<ActWebBinding>() {
                 return true
             }
         }
+
+        WebUtils.setOnLongClickListener(webView)
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {

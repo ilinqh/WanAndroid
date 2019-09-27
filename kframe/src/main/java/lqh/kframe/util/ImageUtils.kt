@@ -1,13 +1,27 @@
-package lqh.kframe.network
+package lqh.kframe.util
+
+import java.io.File
 
 /**
- * 功能：网络请求返回实体
+ * 功能：图片工具类
  * -------------------------------------------------------------------------------------------------
  * 创建者：@author lqh
  * -------------------------------------------------------------------------------------------------
- * 创建日期：2019/8/3
+ * 创建日期：2019-09-25
  * -------------------------------------------------------------------------------------------------
  * 更新历史
  * 编号|更新日期|更新人|更新内容
  */
-data class HttpResponse<T>(var errorMsg: String, var errorCode: Int, var data: T?)
+object ImageUtils {
+
+    /**
+     * 根据 URL 下载图片
+     *
+     * @param url 图片 URL 地址
+     */
+    fun downloadImage(url: String) : File? {
+
+        return null
+    }
+
+}

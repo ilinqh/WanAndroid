@@ -270,13 +270,17 @@ class BannerView (
         llDot.removeAllViews()
         for (i in 0..count) {
             val view = View(context)
-            view.setBackgroundResource(dotImage)
-            view.background.alpha = alpha
+            view.apply {
+                setBackgroundResource(dotImage)
+                background.alpha = this@BannerView.alpha
+            }
             val params = LinearLayout.LayoutParams(dotWith, dotHeight)
-            params.leftMargin = dotSpace / 2
-            params.topMargin = dotSpace / 2
-            params.rightMargin = dotSpace / 2
-            params.bottomMargin = dotSpace / 2
+            params.apply {
+                leftMargin = dotSpace / 2
+                topMargin = dotSpace / 2
+                rightMargin = dotSpace / 2
+                bottomMargin = dotSpace / 2
+            }
             llDot.addView(view, params)
             isChecked.put(i, false)
         }

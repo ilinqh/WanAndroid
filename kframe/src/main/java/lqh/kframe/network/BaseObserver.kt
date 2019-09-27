@@ -5,7 +5,6 @@ import android.content.Context
 import android.text.TextUtils
 import android.view.LayoutInflater
 import io.reactivex.Observer
-import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
 import lqh.kframe.R
 import lqh.kframe.util.LogUtils
@@ -54,7 +53,7 @@ abstract class BaseObserver<T>(var context: Context, showProgress: Boolean) :
      */
     private fun createDialog(): Dialog {
         val loadingDialog = Dialog(context, R.style.AppTheme_OutsideUnCloseDialog)
-        val loadingView = LayoutInflater.from(context).inflate(R.layout.layout_loading_status, null, false)
+        val loadingView = LayoutInflater.from(context).inflate(R.layout.dialog_loading, null, false)
         loadingDialog.setCancelable(false)
         loadingDialog.setContentView(loadingView)
         return loadingDialog
