@@ -2,6 +2,7 @@ package lqh.wanandroid.fragment.home
 
 import android.os.Build
 import android.view.View
+import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.frg_home.*
 import lqh.kframe.controller.BaseFragment
 import lqh.kframe.network.RetrofitFactory
@@ -15,6 +16,7 @@ import lqh.wanandroid.databinding.FrgHomeBinding
 import lqh.wanandroid.model.home.Banner
 import lqh.wanandroid.mvp.contract.home.HomeContract
 import lqh.wanandroid.mvp.presenter.home.HomePresenter
+import lqh.wanandroid.network.HomeService
 
 /**
  * 功能：首页
@@ -54,7 +56,11 @@ class HomeFrg : BaseFragment<FrgHomeBinding>(), HomeContract.IView {
             statusLayout.switchStatusLayout(StatusLayout.NORMAL_STATUS)
             return@launch
         }*/
-        homePresenter.getBanner()
+//        homePresenter.getBanner()
+        val bannerList = RetrofitFactory.getLiveDataRetroService(HomeService::class.java).bannerList()
+        bannerList.observe(this, Observer {
+            getBannerSuccess(it.data)
+        })
     }
 
     private suspend fun getBanner(): ArrayList<Banner> {

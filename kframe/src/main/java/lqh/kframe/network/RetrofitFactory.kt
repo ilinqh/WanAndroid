@@ -3,6 +3,7 @@ package lqh.kframe.network
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import lqh.kframe.network.livedata.LiveDataCallAdapterFactory
 import lqh.kframe.util.LogUtils
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -84,6 +85,20 @@ class RetrofitFactory private constructor() {
 
         fun <T> getRetroService(service: Class<T>): T {
             return retrofit.create(service)
+        }
+
+        private val liveDataRetrofit: Retrofit by lazy {
+            Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                // 添加 GSON 转换器
+                .addConverterFactory(GsonConverterFactory.create(buildGson()))
+                .addCallAdapterFactory(LiveDataCallAdapterFactory())
+                .client(client)
+                .build()
+        }
+
+        fun <T> getLiveDataRetroService(service: Class<T>): T {
+            return liveDataRetrofit.create(service)
         }
 
     }
