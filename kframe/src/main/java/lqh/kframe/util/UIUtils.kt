@@ -1,14 +1,12 @@
 package lqh.kframe.util
 
 import android.app.Activity
-import android.app.ActivityManager
-import android.content.Context
 import android.content.res.Resources
 import android.util.TypedValue
 import android.view.WindowManager
 
 /**
- * 功能：屏幕相关工具类，dp/px，sp/px 转换
+ * 功能：UI 相关工具类
  * -------------------------------------------------------------------------------------------------
  * 创建者：@author lqh
  * -------------------------------------------------------------------------------------------------
@@ -24,36 +22,6 @@ import android.view.WindowManager
 fun Int.dp2px() =
     TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,
-        this.toFloat(),
-        Resources.getSystem().displayMetrics
-    ).toInt()
-
-/**
- * px -> dp
- */
-fun Int.px2dp() =
-    TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_PX,
-        this.toFloat(),
-        Resources.getSystem().displayMetrics
-    ).toInt()
-
-/**
- * sp -> px
- */
-fun Int.sp2px() =
-    TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_SP,
-        this.toFloat(),
-        Resources.getSystem().displayMetrics
-    ).toInt()
-
-/**
- * px -> sp
- */
-fun Int.px2sp() =
-    TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_PX,
         this.toFloat(),
         Resources.getSystem().displayMetrics
     ).toInt()
