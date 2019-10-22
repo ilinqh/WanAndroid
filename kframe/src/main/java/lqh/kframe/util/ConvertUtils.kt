@@ -1,6 +1,10 @@
 package lqh.kframe.util
 
 import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.util.TypedValue
 
 /**
@@ -50,4 +54,30 @@ object ConvertUtils {
         px,
         Resources.getSystem().displayMetrics
     )
+
+    /**
+     * Bitmap -> Drawable
+     */
+    fun bitmap2Drawable(res: Resources, bitmap: Bitmap): Drawable = BitmapDrawable(res, bitmap)
+
+    /**
+     * Drawable -> Bitmap
+     */
+    fun drawable2Bitmap(drawable: Drawable) : Bitmap? {
+        var bitmap: Bitmap? = null
+        if (drawable is BitmapDrawable) {
+            return drawable.bitmap
+        }
+
+        if (drawable.intrinsicWidth <= 0 || drawable.intrinsicHeight <= 0) {
+            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
+        } else {
+            bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        }
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, canvas.width, canvas.height)
+        drawable.draw(canvas)
+
+        return bitmap
+    }
 }
