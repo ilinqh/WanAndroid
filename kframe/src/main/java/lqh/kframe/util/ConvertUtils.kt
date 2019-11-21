@@ -63,16 +63,15 @@ object ConvertUtils {
     /**
      * Drawable -> Bitmap
      */
-    fun drawable2Bitmap(drawable: Drawable) : Bitmap? {
-        var bitmap: Bitmap? = null
+    fun drawable2Bitmap(drawable: Drawable) : Bitmap {
         if (drawable is BitmapDrawable) {
             return drawable.bitmap
         }
 
-        if (drawable.intrinsicWidth <= 0 || drawable.intrinsicHeight <= 0) {
-            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
+        val bitmap = if (drawable.intrinsicWidth <= 0 || drawable.intrinsicHeight <= 0) {
+            Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
         } else {
-            bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+            Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
         }
         val canvas = Canvas(bitmap)
         drawable.setBounds(0, 0, canvas.width, canvas.height)
