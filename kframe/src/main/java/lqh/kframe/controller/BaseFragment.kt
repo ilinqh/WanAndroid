@@ -19,6 +19,7 @@ import lqh.kframe.util.LogUtils
 import lqh.kframe.util.UIUtils
 import lqh.kframe.weight.statuslayout.StatusConfig
 import lqh.kframe.weight.statuslayout.StatusLayout
+import lqh.kframe.weight.statuslayout.StatusLayout.Companion.ERROR_STATUS
 
 /**
  * 功能：基础 Fragment
@@ -91,6 +92,7 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment(), View.OnClickListe
 
     protected val mainScope by lazy {
         MainScope() + CoroutineExceptionHandler { _, throwable ->
+            statusLayout.switchStatusLayout(ERROR_STATUS)
             throwable.message?.let {
                 LogUtils.e(it)
             }

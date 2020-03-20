@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/StudioProjects-WanAndroid.iml" filepath="$PROJECT_DIR$/StudioProjects-WanAndroid.iml" group="WanAndroid" />
       <module fileurl="file://$PROJECT_DIR$/.idea/WanAndroid.iml" filepath="$PROJECT_DIR$/.idea/WanAndroid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/WanAndroid-app.iml" filepath="$PROJECT_DIR$/app/WanAndroid-app.iml" group="WanAndroid/app" />
+      <module fileurl="file://$PROJECT_DIR$/kframe/WanAndroid-kframe.iml" filepath="$PROJECT_DIR$/kframe/WanAndroid-kframe.iml" group="WanAndroid/kframe" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/kframe/kframe.iml" filepath="$PROJECT_DIR$/kframe/kframe.iml" />
     </modules>

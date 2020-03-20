@@ -63,20 +63,20 @@ class HomeFrg : BaseFragment<FrgHomeBinding>(), HomeContract.IView {
     override fun getLayoutId(): Int = R.layout.frg_home
 
     override fun onRefreshData() {
-        /*mainScope.launch {
+        mainScope.launch {
             val bannerList = getBanner()
             initBanner(bannerList)
 
-            refreshLayout.isRefreshing = false
+//            refreshLayout.isRefreshing = false
             statusLayout.switchStatusLayout(StatusLayout.NORMAL_STATUS)
             return@launch
-        }*/
+        }
 //        homePresenter.getBanner()
-        val bannerList =
+        /*val bannerList =
             RetrofitFactory.getLiveDataRetroService(HomeService::class.java).bannerList()
         bannerList.observe(this, Observer {
             getBannerSuccess(it.data)
-        })
+        })*/
     }
 
     private suspend fun getBanner(): ArrayList<Banner> {
