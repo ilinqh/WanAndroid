@@ -20,3 +20,5 @@
 - [ ] 封装 RecyclerView Item
 - [ ] 各类滑动冲突
 - [ ] Android 6.0~9.0 各版本的适配
+
+----
