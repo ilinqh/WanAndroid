@@ -8,7 +8,7 @@
 - [x] 协程
 - [ ] ~~MotionLayout~~
 - [ ] TransitionManager 过渡动画（待定）
-- [ ] Flutter（新开项目）
+- [ ] ~~Flutter（新开项目）~~
 
 ----
 
