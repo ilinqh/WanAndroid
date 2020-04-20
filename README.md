@@ -1,5 +1,6 @@
 # WanAndroid
 玩 Android 项目 kotlin 版本
+日常 API 调试项目
 
 待应用技术：
 - [ ] ~~多个 Activity + 多个 Fragment 实现整个 APP 功能~~
