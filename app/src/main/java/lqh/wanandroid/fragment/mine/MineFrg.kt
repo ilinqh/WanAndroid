@@ -1,5 +1,6 @@
 package lqh.wanandroid.fragment.mine
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import kotlinx.android.synthetic.main.frg_mine.*
@@ -52,12 +53,10 @@ class MineFrg : BaseFragment<FrgHomeBinding>() {
     override fun initData() {
 
         statusLayout.switchStatusLayout(StatusLayout.NORMAL_STATUS)
-/*
 
         for (i in 0 until 20) {
             data.add(COLOR_LIST[i % COLOR_LIST.size])
         }
-*/
 
         GlobalScope.launch {
             try {
@@ -73,8 +72,19 @@ class MineFrg : BaseFragment<FrgHomeBinding>() {
         headerView.setOnClickListener {
 //            TestUtils.addShortcut(mContext)
         }
-        adapter.setHeaderView(headerView)
+        val headerView1 =
+            LayoutInflater.from(mContext).inflate(R.layout.header_view, recyclerView, false)
+        headerView1.setBackgroundColor(Color.BLUE)
+        adapter.addHeaderView(headerView)
+        adapter.addHeaderView(headerView1)
         adapter.setHeaderAndEmpty(true)
+
+        adapter.setOnItemClickListener { _, view, position ->
+            LogUtils.e("adapter position -> ${recyclerView.getChildAdapterPosition(view)}")
+            LogUtils.e("position -> $position")
+            LogUtils.e("headerView Count -> ${adapter.headerLayoutCount}")
+        }
+
         recyclerView.adapter = adapter
         adapter.emptyView = emptyView
     }

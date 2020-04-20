@@ -17,6 +17,10 @@ object AppUtils {
 
     /**
      * 判断 APP 是否在前台显示
+     *
+     * @param context 上下文
+     * @return true  - 显示于前台
+     *         false - 隐藏于后台
      */
     fun appOnForeground(context: Context): Boolean {
         val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
@@ -29,5 +33,21 @@ object AppUtils {
             }
         }
         return false
+    }
+
+    /**
+     * 获取应用包名
+     *
+     * @param context 上下文
+     * @return 应用名
+     * */
+    fun getApplicationName(context: Context): String? {
+        return try {
+            val packageManager = context.packageManager
+            val applicationInfo = packageManager.getApplicationInfo(context.packageName, 0)
+            packageManager.getApplicationLabel(applicationInfo) as String
+        } catch (e: Exception) {
+            null
+        }
     }
 }

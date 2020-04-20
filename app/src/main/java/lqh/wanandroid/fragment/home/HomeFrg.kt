@@ -2,9 +2,12 @@ package lqh.wanandroid.fragment.home
 
 import android.os.Build
 import android.view.View
+import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.frg_home.*
+import kotlinx.coroutines.launch
 import lqh.kframe.controller.BaseFragment
 import lqh.kframe.network.RetrofitFactory
+import lqh.kframe.util.ImageUtils
 import lqh.kframe.util.UIUtils
 import lqh.kframe.weight.BannerView
 import lqh.kframe.weight.statuslayout.StatusLayout
@@ -15,6 +18,7 @@ import lqh.wanandroid.databinding.FrgHomeBinding
 import lqh.wanandroid.model.home.Banner
 import lqh.wanandroid.mvp.contract.home.HomeContract
 import lqh.wanandroid.mvp.presenter.home.HomePresenter
+import lqh.wanandroid.network.HomeService
 
 /**
  * 功能：首页
@@ -41,20 +45,38 @@ class HomeFrg : BaseFragment<FrgHomeBinding>(), HomeContract.IView {
         }*/
 
         onRefreshData()
+
+        btnSearch.setOnClickListener {
+            downImage()
+        }
+    }
+
+    private fun downImage() {
+        mainScope.launch {
+            ImageUtils.downloadImage(
+                mContext,
+                "https://res.mall.ppxsc.com/goods/207/207_06245622405766468.jpg!j750"
+            )
+        }
     }
 
     override fun getLayoutId(): Int = R.layout.frg_home
 
     override fun onRefreshData() {
-        /*mainScope.launch {
+        mainScope.launch {
             val bannerList = getBanner()
             initBanner(bannerList)
 
-            refreshLayout.isRefreshing = false
+//            refreshLayout.isRefreshing = false
             statusLayout.switchStatusLayout(StatusLayout.NORMAL_STATUS)
             return@launch
-        }*/
-        homePresenter.getBanner()
+        }
+//        homePresenter.getBanner()
+        /*val bannerList =
+            RetrofitFactory.getLiveDataRetroService(HomeService::class.java).bannerList()
+        bannerList.observe(this, Observer {
+            getBannerSuccess(it.data)
+        })*/
     }
 
     private suspend fun getBanner(): ArrayList<Banner> {
@@ -92,6 +114,14 @@ class HomeFrg : BaseFragment<FrgHomeBinding>(), HomeContract.IView {
             bannerView.visibility = View.VISIBLE
         } else {
             bannerView.visibility = View.GONE
+        }
+    }
+
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.btnSearch -> {
+                downImage()
+            }
         }
     }
 }

@@ -3,7 +3,7 @@
 
 待应用技术：
 - [ ] 多个 Activity + 多个 Fragment 实现整个 APP 功能
-- [ ] JetPack 中的组件（LiveData + ViewModel + LifeCycles）
+- [x] JetPack 中的组件（LiveData + ViewModel + LifeCycles）
 - [x] 使用 DataBinding
 - [ ] 协程
 - [ ] ~~MotionLayout~~

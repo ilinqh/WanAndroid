@@ -1,5 +1,6 @@
 package lqh.wanandroid.network
 
+import androidx.lifecycle.LiveData
 import io.reactivex.Observable
 import io.reactivex.SingleSource
 import lqh.kframe.network.HttpResponse
@@ -30,5 +31,8 @@ interface HomeService {
      */
     @GET("/banner/json")
     fun getBanner(): Observable<HttpResponse<ArrayList<Banner>>>
+
+    @GET("/banner/json")
+    fun bannerList(): LiveData<HttpResponse<ArrayList<Banner>>>
 
 }
