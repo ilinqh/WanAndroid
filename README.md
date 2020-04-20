@@ -5,7 +5,7 @@
 待应用技术：
 - [ ] ~~多个 Activity + 多个 Fragment 实现整个 APP 功能~~
 - [ ] JetPack 中的组件（LiveData + ViewModel + LifeCycles）
-- [x] 使用 DataBinding
+- [x] ~~使用 DataBinding~~
 - [x] 协程
 - [ ] ~~MotionLayout~~
 - [ ] TransitionManager 过渡动画（待定）
