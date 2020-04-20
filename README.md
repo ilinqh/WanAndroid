@@ -7,7 +7,7 @@
 - [x] 使用 DataBinding
 - [x] 协程
 - [ ] ~~MotionLayout~~
-- [ ] TransitionManager 过渡动画
+- [ ] TransitionManager 过渡动画（待定）
 - [ ] Flutter
 
 ----
